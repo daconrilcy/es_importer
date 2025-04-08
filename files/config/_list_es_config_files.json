@@ -1,0 +1,22 @@
+{
+  "file_details": {
+    "index_name": "file_details",
+    "mapping_file": "_base_index_files.json",
+    "datas_file": "_base_files.json"
+  },
+  "file_types": {
+    "index_name": "file_types",
+    "mapping_file": "_base_index_types.json",
+    "datas_file": "_base_file_types.json"
+  },
+  "es_types": {
+    "index_name": "es_types",
+    "mapping_file": "_base_es_types_index.json",
+    "datas_file": "_base_es_types.json"
+  },
+  "es_analysers": {
+    "index_name": "es_analysers",
+    "mapping_file": "_base_es_analysers_index.json",
+    "datas_file": "_base_es_analysers.json"
+  }
+}

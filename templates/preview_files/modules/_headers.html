@@ -1,0 +1,11 @@
+<div class="row header-preview">
+{% for header in headers_infos  %}
+    {% if header.title == '...' %}
+        <div class="col-md-{{ header.size }} interm">
+            <hr>
+        </div>
+    {% else %}
+        <div class="col-md-{{ header.size }}">{{ header.title }}</div>
+    {% endif %}
+{% endfor %}
+</div>

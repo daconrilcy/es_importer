@@ -1,0 +1,7 @@
+{
+  "front_name": "import pays",
+  "datas_filename": "curiexplore-pays.csv",
+  "datas_separator": ";",
+  "mapping_filename": "mapping_pays.json",
+  "index_name": "pays"
+}

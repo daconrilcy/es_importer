@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Elasticsearch Manager</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dropzone.min.css') }}">
+    <link rel="stylesheet" type="text/css"
+          href="https://daconrilcy.github.io/global_css/css/base.css">
+    <link rel="stylesheet" type="text/css"
+          href="https://daconrilcy.github.io/global_css/css/es_import.css">
+
+    <script type="importmap">
+        {
+          "imports": {
+            "app": "/static/js/app.js",
+            "navigation": "/static/js/navigation.js",
+            "menu": "/static/js/menu.js",
+            "list_files": "/static/js/list_files.js",
+            "mapping_preview": "/static/js/mapping_preview.js",
+            "dropzone-init": "/static/js/dropzone-init.js"
+          }
+        }
+    </script>
+    <script type="module">
+        import "app";
+    </script>
+    <script src="{{ url_for('static', filename='dropzone.min.js') }}" defer></script>
+</head>
+<body>
+
+{% include "navbar.html" %}
+
+<div id="content">
+    {% block content %}
+    {% endblock %}
+</div>
+
+</body>
+</html>

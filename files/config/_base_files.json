@@ -1,0 +1,50 @@
+[
+  {
+    "type": "datas",
+    "extension": "csv",
+    "file_name": "curiexplore-pays.csv",
+    "initial_file_name": "curiexplore-pays.csv",
+    "front_end_file_name": "datas pays 02.2025",
+    "separator": ";",
+    "upload_date": "2025-02-16T23:27:31Z",
+    "description": "fichier de données sur la liste des pays",
+    "initial_file": true
+  },
+  {
+    "type": "mappings",
+    "extension": "json",
+    "file_name": "mapping_pays.json",
+    "initial_file_name": "mapping_pays.json",
+    "front_end_file_name": "mapping pays",
+    "separator": ",",
+    "upload_date": "2025-02-16T23:27:31Z",
+    "description": "fichier de mapping du fichier de données de curiexplore-pays.csv",
+    "initial_file": true,
+    "status": ""
+  },
+  {
+    "type": "datas",
+    "extension": "csv",
+    "file_name": "test.csv",
+    "initial_file_name": "test.csv",
+    "front_end_file_name": "fichier test",
+    "separator": ",",
+    "upload_date": "2025-02-16T23:27:31Z",
+    "description": "fichier test",
+    "initial_file": true,
+    "status": ""
+  },
+  {
+    "type": "importers",
+    "extension": "json",
+    "file_name": "pays.json",
+    "initial_file_name": "pays.json",
+    "front_end_file_name": "Importer pays",
+    "separator": ",",
+    "upload_date": "2025-02-16T23:27:31Z",
+    "description": "",
+    "initial_file": true,
+    "status": ""
+  }
+
+]

@@ -1,0 +1,15 @@
+{
+  "mappings": {
+    "properties": {
+      "name": {
+        "type": "keyword"
+      },
+      "category": {
+        "type": "keyword"
+      },
+      "description": {
+        "type": "text"
+      }
+    }
+  }
+}

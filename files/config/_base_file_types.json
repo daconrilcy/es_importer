@@ -1,0 +1,62 @@
+[
+  {
+    "name": "datas",
+    "accepted_extensions": [
+      "csv"
+    ],
+    "folder_path": "files\\datas",
+    "url": "uploads/datas",
+    "description": "fichier de données",
+    "base_layout": "datas.html",
+    "html_preview_layout": "preview_datas.html",
+    "method_preview": "data_csv"
+  },
+  {
+    "name": "mappings",
+    "accepted_extensions": [
+      "json"
+    ],
+    "folder_path": "files\\mappings",
+    "url": "uploads/mappings",
+    "description": "fichier de mapping du fichier de données",
+    "base_layout": "mappings.html",
+    "html_preview_layout": "preview_mappings.html",
+    "method_preview": "mappings_json"
+  },
+  {
+    "name": "importers",
+    "accepted_extensions": [
+      "json"
+    ],
+    "folder_path": "files\\importers",
+    "url": "uploads/importers",
+    "description": "fichier decrivant la configuration de l'importation",
+    "base_layout": "importers.html",
+    "html_preview_layout": "preview_importers.html",
+    "method_preview": "importers_json"
+  },
+  {
+    "name": "processors",
+    "accepted_extensions": [
+      "json"
+    ],
+    "folder_path": "files\\processors",
+    "url": "uploads/processors",
+    "description": "fichier decrivant la configuration du traitement des données de plusieurs fichiers",
+    "base_layout": "processors.html",
+    "html_preview_layout": "preview_processors.html",
+    "method_preview": "modif_json"
+  },
+  {
+    "name": "bulks",
+    "accepted_extensions": [
+      "json"
+    ],
+    "folder_path": "files\\bulks",
+    "url": "uploads/bulks",
+    "description": "fichier contenant les docs à importer.Les documents ont été préalablement traités par un processor",
+    "base_layout": "bulks.html",
+    "html_preview_layout": "preview_bulks.html",
+    "method_preview": "modif_json"
+  }
+]

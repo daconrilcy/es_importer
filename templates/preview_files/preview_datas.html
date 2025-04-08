@@ -1,0 +1,125 @@
+{% if data %}
+{% set isHeaderReduced = False %}
+{% set max_columns = 12 %}
+{% set total = data.headers|length %}
+{% if total > max_columns %}
+{% set isHeaderReduced = True %}
+{% set total = 12 %}
+{% set visible_headers = data.headers[:6] + ['...'] + data.headers[-6:] %}
+{% else %}
+{% set visible_headers = data.headers %}
+{% endif %}
+{% set classcol = 'csv-col colx-md-' + total|string %}
+{% if isHeaderReduced %}
+{% set classcol = 'csv-col colx-md-12 reduced' %}
+{% endif %}
+{% if data.last_three_rows|length > 0 %}
+{% set affich_end = True %}
+{% else %}
+{% set affich_end = False %}
+{% endif %}
+{% set filename=data.filename %}
+{% set file_id=data.file_id %}
+{% set file_type=data.file_type %}
+
+{% set add_to_btn = 'data' %}
+
+<h2 class="mb-3">Aperçu du fichier de datas <span class="filename">{{data.front_name}}</span></h2>
+<div class="row">
+    <div class="col-md-9 sub-sep"> Separateur utilisé : <span>{{data.sep}}</span></div>
+    <div class="col-md-2">
+        <button class="btn btn-create-mapping" href="">creer un fichier de mapping</button>
+    </div>
+    {% include "preview_files/modules/_btn_save_delete.html" %}
+</div>
+<div class="container csv-content">
+    <div class="row">
+        {% for header in visible_headers %}
+        {% set classToAdd = ' header' %}
+        {% if header == '...' %}
+        <div class="{{ classcol }}{{ classToAdd }} interm">
+            <hr>
+        </div>
+        {% else %}
+        <div class="{{ classcol }}{{ classToAdd }}">{{ header }}</div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="csv-content-data" id="preview-list-fields-container">
+        {% for row in data.first_three_rows %}
+        {% if loop.first%}
+        {% set classPair = ' pair' %}
+        {% else %}
+        {% if loop.index is odd %}
+        {% set classPair = ' pair' %}
+        {% else %}
+        {% set classPair = ' impair' %}
+        {% endif %}
+        {% endif %}
+        {% if loop.last and affich_end %}
+        {% set classRow = 'row blurred-border' %}
+        {% set classPair = ' blurred-border last' %}
+        {% else %}
+        {% set classRow = 'row' %}
+        {% endif %}
+        <div class="{{ classRow }}">
+            {% for header in visible_headers %}
+            {% if header == '...' %}
+            <div class="{{ classcol }} content{{ classPair }} interm">
+                <hr>
+            </div>
+            {% else %}
+            <div class="{{ classcol }} content{{ classPair }}">{{ row.get(header, '') }}</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% if affich_end %}
+    <div class="row csv-separator">
+        {% for header in visible_headers %}
+        {% if header == '...' %}
+        <div class="{{ classcol }} content nocontent interm">
+            <hr>
+        </div>
+        {% else %}
+        <div class="{{ classcol }} content nocontent">
+            <hr>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="csv-content-data">
+        {% set classPair = '' %}
+        {% for row in data.last_three_rows %}
+        {% if loop.first or loop.last %}
+        {% set classPair = ' pair' %}
+        {% else %}
+        {% set classPair = ' impair' %}
+        {% endif %}
+        {% if loop.first %}
+        {% set classRow = 'row blurred-border' %}
+        {% set classPair = ' blurred-border first' %}
+        {% else %}
+        {% set classRow = 'row' %}
+        {% endif %}
+        <div class="row">
+            {% for header in visible_headers %}
+            {% if header == '...' %}
+            <div class="{{ classcol }} content{{ classPair }} interm">
+                <hr>
+            </div>
+            {% else %}
+            <div class="{{ classcol }} content{{ classPair }}">{{ row.get(header, '') }}</div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% else %}
+    <p class="error">Impossible de charger l'aperçu du fichier.</p>
+    {% endif %}
+</div>

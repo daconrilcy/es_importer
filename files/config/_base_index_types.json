@@ -1,0 +1,30 @@
+{
+  "mappings": {
+    "properties": {
+      "`name": {
+        "type": "keyword"
+      },
+      "accepted_extensions": {
+        "type": "keyword"
+      },
+      "folder_path": {
+        "type": "text"
+      },
+      "url": {
+        "type": "text"
+      },
+      "description": {
+        "type": "text"
+      },
+      "base_layout": {
+        "type": "text"
+      },
+      "html_preview_layout": {
+        "type": "text"
+      },
+      "method_preview": {
+        "type": "keyword"
+      }
+    }
+  }
+}

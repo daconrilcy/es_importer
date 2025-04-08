@@ -1,0 +1,10 @@
+{% if layout %} {% extends "layout.html" %} {% endif %}
+{% block content %}
+<div class="import-section">
+    {% if file_type == 'error' %}
+    <h2 class="mb-3">Impossible de charger la page d'importation</h2>
+    {%else%}
+    {% include file_type.base_layout %}
+    {%endif%}
+</div>
+{% endblock %}

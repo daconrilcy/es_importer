@@ -1,0 +1,46 @@
+{% block list_files %}
+{% set add_infos = add_infos | default('') %}
+<div class="card list-card mx-auto">
+  <div class="card-header listfile"><h5>Fichiers {{file_type.name}} disponibles</h5></div>
+  <div class="list-card-body">
+    <ul class="list-group">
+      {% for data_file in data_files %}
+      {% set class_status = "error" if data_file.status == 'missing' else "" %}
+      <li class="list-item list-files {{class_status}}"
+          data-filename='{{ data_file.file_name }}'
+          data-id="{{ data_file.id }}"
+          data-filetype="{{ data_file.type.name }}" data-ext="{{data_file.extension}}"
+          data-status="{{ data_file.status }}"
+      >
+        <div class="col-md-9">
+          <input type="text" class="file-name"
+                 value="{{ data_file.front_end_file_name }}"
+                 placeholder="Nom du fichier"
+                 {{ "disabled" if data_file.status == 'missing' }}>
+        </div>
+        {% if 'csv' in file_type.accepted_extensions %}
+        <div class="col-md-1">
+          <input type="text" class="separator-input"
+                 data-original="{{ data_file.separator or ',' }}"
+                 value="{{ data_file.separator or ',' }}"
+                 placeholder="Séparateur"
+                 {{ "disabled" if data_file.status == 'missing' }}>
+        </div>
+        {% endif %}
+        <div class="col-md-1">
+          <button class="btn btn-update hidden">
+            <i class="glyphicon glyphicon-refresh gly-spin"></i>
+          </button>
+        </div>
+        <div class="col-md-1">
+          <button class="btn btn-delete">
+            <i class="glyphicon glyphicon-remove"></i>
+          </button>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

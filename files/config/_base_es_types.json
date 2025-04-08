@@ -1,0 +1,152 @@
+[
+  {
+    "name": "text",
+    "category": "Text",
+    "description": "Pour les recherches en texte intégral."
+  },
+  {
+    "name": "keyword",
+    "category": "Keyword",
+    "description": "Pour des valeurs exactes."
+  },
+  {
+    "name": "long",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques entières."
+  },
+  {
+    "name": "integer",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques entières."
+  },
+  {
+    "name": "short",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques entières."
+  },
+  {
+    "name": "byte",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques entières."
+  },
+  {
+    "name": "double",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques décimales."
+  },
+  {
+    "name": "float",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques décimales."
+  },
+  {
+    "name": "half_float",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques décimales."
+  },
+  {
+    "name": "scaled_float",
+    "category": "Numeric",
+    "description": "Pour des valeurs numériques décimales. Permet d’utiliser une précision définie."
+  },
+  {
+    "name": "boolean",
+    "category": "Boolean",
+    "description": "Pour des valeurs booléennes."
+  },
+  {
+    "name": "date",
+    "category": "Date",
+    "description": "Pour des dates. Formats personnalisables (ISO 8601 par défaut)."
+  },
+  {
+    "name": "geo_point",
+    "category": "Geo",
+    "description": "Pour des coordonnées géographiques."
+  },
+  {
+    "name": "geo_shape",
+    "category": "Geo",
+    "description": "Pour des formes géographiques."
+  },
+  {
+    "name": "ip",
+    "category": "IP",
+    "description": "Pour des adresses IP."
+  },
+  {
+    "name": "completion",
+    "category": "Text",
+    "description": "Pour des champs de saisie semi-automatique."
+  },
+  {
+    "name": "token_count",
+    "category": "Text",
+    "description": "Pour des champs de comptage de tokens."
+  },
+  {
+    "name": "object",
+    "category": "Object",
+    "description": "Pour des objets JSON imbriqués."
+  },
+  {
+    "name": "nested",
+    "category": "Nested",
+    "description": "Pour des objets JSON imbriqués. Similaire à object mais avec support pour les requêtes relationnelles."
+  },
+  {
+    "name": "binary",
+    "category": "Binary",
+    "description": "Pour des données encodées en base64."
+  },
+  {
+    "name": "integer_range",
+    "category": "Range",
+    "description": "Pour des plages de valeurs entières."
+  },
+  {
+    "name": "long_range",
+    "category": "Range",
+    "description": "Pour des plages de valeurs longues."
+  },
+  {
+    "name": "float_range",
+    "category": "Range",
+    "description": "Pour des plages de valeurs décimales."
+  },
+  {
+    "name": "double_range",
+    "category": "Range",
+    "description": "Pour des plages de valeurs décimales précises."
+  },
+  {
+    "name": "date_range",
+    "category": "Range",
+    "description": "Pour des plages de dates. Formats personnalisables."
+  },
+  {
+    "name": "dense_vector",
+    "category": "Vector",
+    "description": "Pour des vecteurs denses."
+  },
+  {
+    "name": "sparse_vector",
+    "category": "Vector",
+    "description": "Pour des vecteurs épars."
+  },
+  {
+    "name": "search_as_you_type",
+    "category": "Text",
+    "description": "Pour des champs de saisie semi-automatique."
+  },
+  {
+    "name": "shape",
+    "category": "Shape",
+    "description": "Pour des formes géométriques non géographiques (ex. : coordonnées cartésiennes)."
+  },
+  {
+    "name": "flattened",
+    "category": "Flattened",
+    "description": "Pour des objets JSON imbriqués. Les champs imbriqués sont aplatis pour faciliter les requêtes."
+  }
+]

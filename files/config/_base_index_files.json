@@ -1,0 +1,36 @@
+{
+  "mappings": {
+    "properties": {
+      "type": {
+        "type": "keyword"
+      },
+      "file_type": {
+        "type": "keyword"
+      },
+      "file_name": {
+        "type": "text"
+      },
+      "initial_file_name": {
+        "type": "text"
+      },
+      "front_end_file_name": {
+        "type": "text"
+      },
+      "separator": {
+        "type": "keyword"
+      },
+      "upload_date": {
+        "type": "date"
+      },
+      "description": {
+        "type": "text"
+      },
+      "initial_file": {
+        "type": "boolean"
+      },
+      "status": {
+        "type": "keyword"
+      }
+    }
+  }
+}
