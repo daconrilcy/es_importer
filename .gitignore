@@ -1,1 +1,4 @@
 passcrypter.py
+.idea
+.venv
+__pycache__
