@@ -59,7 +59,7 @@ class ElasticSearchManager:
                 return True
             return False
 
-    def show_list_datas(self, index_name: str, size: int = 10) -> list or bool:
+    def show_list_datas(self, index_name: str, size: int = 10) -> list | bool:
         """
         Retourne la liste des documents dans un index.
         """
@@ -137,7 +137,7 @@ class ElasticSearchManager:
         }
         return self.es_tools.search_by_query(self.config.index_files_name, query)
 
-    def get_file_by_id(self, file_id: str) -> dict or bool:
+    def get_file_by_id(self, file_id: str) -> dict | bool:
         """
         Get a file from Elasticsearch by its id.
         :param file_id: File id

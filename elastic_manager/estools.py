@@ -77,7 +77,7 @@ class ElasticSearchTools:
         with self.es_connection() as es:
             return es.indices.exists(index=index_name)
 
-    def search_all(self, index_name: str, size=100) -> dict or bool:
+    def search_all(self, index_name: str, size=100) -> dict | bool:
         """
         Récupère tous les documents d'un index.
         """
@@ -99,7 +99,7 @@ class ElasticSearchTools:
 
         return documents
 
-    def search_by_query(self, index_name: str, query: dict) -> dict or bool:
+    def search_by_query(self, index_name: str, query: dict) -> dict | bool:
         """
         Récupère des documents d'un index en fonction d'une requête.
         :param index_name: Nom de l'index
@@ -124,7 +124,7 @@ class ElasticSearchTools:
 
         return documents
 
-    def get_doc_by_id(self, index_name: str, doc_id: str) -> dict or bool:
+    def get_doc_by_id(self, index_name: str, doc_id: str) -> dict | bool:
         """
         Get a document from Elasticsearch by its id.
         :param index_name: Index name
