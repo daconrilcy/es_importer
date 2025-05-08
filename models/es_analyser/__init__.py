@@ -37,7 +37,7 @@ class EsAnalysers:
 
         return list_analysers
 
-    def get_analyser(self, analyser_name: str) -> EsAnalyser or False:
+    def get_analyser(self, analyser_name: str) -> EsAnalyser | bool:
         """
         Get the specified analyzer.
 

@@ -260,7 +260,7 @@ def infer_elasticsearch_mapping_from_csv(file_path, sep='\\t'):
     return pre_mapping
 
 
-def preview_csv(filepath: str, sep: str = ',') -> str or bool:
+def preview_csv(filepath: str, sep: str = ',') -> str | bool:
     """
     Preview the csv file and return the first and last three rows.
     """
