@@ -24,22 +24,6 @@ class DataImporter:
         self.expected_keys = {"front_name", "datas_filename", "datas_separator", "mapping_filename", "index_name"}
 
     @property
-    def id(self) -> str:
-        """
-        return the id of the importer
-        :return: str: id
-        """
-        return self._id
-
-    @id.setter
-    def id(self, es_id: str):
-        if es_id is None or es_id == "":
-            print(f"❌ DataImporter.id : id is empty")
-            return
-        self._id = es_id
-
-
-    @property
     def front_name(self) -> str:
         """
         return the front name of the importer

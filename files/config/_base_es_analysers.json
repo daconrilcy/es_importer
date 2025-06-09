@@ -1,217 +1,174 @@
 [
   {
     "name": "standard",
-    "requires_additional_info": false,
     "description": "Analyzer par défaut, basé sur Unicode Text Segmentation."
   },
   {
     "name": "simple",
-    "requires_additional_info": false,
     "description": "Divise le texte en tokens à partir des caractères non-lettres, met en minuscules."
   },
   {
     "name": "whitespace",
-    "requires_additional_info": false,
     "description": "Divise uniquement sur les espaces blancs, ne change pas la casse."
   },
   {
     "name": "stop",
-    "requires_additional_info": false,
     "description": "Comme standard mais supprime les stopwords (anglais par défaut)."
   },
   {
     "name": "keyword",
-    "requires_additional_info": false,
     "description": "Ne divise pas le texte, retourne le texte entier comme un seul token."
   },
   {
     "name": "pattern",
-    "requires_additional_info": true,
     "description": "Utilise une regex pour diviser le texte. Nécessite le paramètre 'pattern'."
   },
   {
     "name": "fingerprint",
-    "requires_additional_info": false,
     "description": "Trie les tokens, supprime les doublons et les met en forme normalisée."
   },
   {
     "name": "arabic",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'arabe, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "armenian",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'arménien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "basque",
-    "requires_additional_info": false,
     "description": "Analyseur pour le basque, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "bengali",
-    "requires_additional_info": false,
     "description": "Analyseur pour le bengali, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "brazilian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le portugais brésilien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "bulgarian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le bulgare, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "catalan",
-    "requires_additional_info": false,
     "description": "Analyseur pour le catalan, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "cjk",
-    "requires_additional_info": false,
     "description": "Analyseur pour les langues CJK, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "czech",
-    "requires_additional_info": false,
     "description": "Analyseur pour le tchèque, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "danish",
-    "requires_additional_info": false,
     "description": "Analyseur pour le danois, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "dutch",
-    "requires_additional_info": false,
     "description": "Analyseur pour le néerlandais, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "english",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'anglais, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "estonian",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'estonien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "finnish",
-    "requires_additional_info": false,
     "description": "Analyseur pour le finnois, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "french",
-    "requires_additional_info": false,
     "description": "Analyseur pour le français, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "galician",
-    "requires_additional_info": false,
     "description": "Analyseur pour le galicien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "german",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'allemand, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "greek",
-    "requires_additional_info": false,
     "description": "Analyseur pour le grec, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "hindi",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'hindi, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "hungarian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le hongrois, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "indonesian",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'indonésien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "irish",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'irlandais, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "italian",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'italien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "latvian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le letton, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "lithuanian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le lituanien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "norwegian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le norvégien, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "persian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le persan, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "portuguese",
-    "requires_additional_info": false,
     "description": "Analyseur pour le portugais, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "romanian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le roumain, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "russian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le russe, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "serbian",
-    "requires_additional_info": false,
     "description": "Analyseur pour le serbe, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "sorani",
-    "requires_additional_info": false,
     "description": "Analyseur pour le sorani, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "spanish",
-    "requires_additional_info": false,
     "description": "Analyseur pour l'espagnol, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "swedish",
-    "requires_additional_info": false,
     "description": "Analyseur pour le suédois, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "thai",
-    "requires_additional_info": false,
     "description": "Analyseur pour le thaï, basé sur le segmentateur de texte Unicode."
   },
   {
     "name": "turkish",
-    "requires_additional_info": false,
     "description": "Analyseur pour le turc, basé sur le segmentateur de texte Unicode."
   }
 ]

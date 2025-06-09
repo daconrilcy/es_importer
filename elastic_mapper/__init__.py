@@ -6,7 +6,7 @@ import glob
 
 from config import Config
 from elastic_mapper.EsMappingProperty import EsMappingProperty
-from models.elastic_type import EsFieldType
+from models.elastic_specifiques import EsFieldType
 from utils import safe_load_csv, is_file_in_folder, sanitaze_string
 
 

@@ -1,0 +1,19 @@
+{
+  "mapping_name": "test_mapping",
+  "related_to": "TestEntity",
+  "mapping": {
+    "field1": {
+      "source_field": "source_1",
+      "description": "A test field",
+      "mapped": true,
+      "type": "text",
+      "analyzer": "standard"
+    },
+    "field2": {
+      "source_field": "source_2",
+      "description": "Another field",
+      "mapped": false,
+      "type": "keyword"
+    }
+  }
+}

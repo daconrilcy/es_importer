@@ -1,59 +1,14 @@
-<!DOCTYPE html>
-{% if error_reason is not defined %}
-{% set error_reason = "Aucune raison d'erreur fournie." %}
-{% endif %}
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>404 - Page perdue !</title>
-    <style>
-        body {
-          background: #ffeaa7;
-          font-family: 'Comic Sans MS', cursive, sans-serif;
-          text-align: center;
-          color: #2d3436;
-          padding: 4rem 1rem;
-        }
+{%if layout %}{% extends "layout.html" %} {% endif %}
+{% block title %}
+<title>404 - Elasticsearch Manager</title>
+{% endblock %}
+{% block content %}
 
-        h1 {
-          font-size: 8rem;
-          margin: 0;
-          color: #d63031;
-          text-shadow: 4px 4px 0 #fab1a0;
-        }
-
-        p {
-          font-size: 2rem;
-          margin: 1rem 0 2rem;
-        }
-
-        a {
-          font-size: 1.5rem;
-          background-color: #00cec9;
-          color: white;
-          padding: 1rem 2rem;
-          border-radius: 12px;
-          text-decoration: none;
-          box-shadow: 4px 4px 0 #0984e3;
-          transition: all 0.3s ease;
-        }
-
-        a:hover {
-          background-color: #0984e3;
-          box-shadow: 2px 2px 0 #00cec9;
-        }
-
-        .snail {
-          font-size: 5rem;
-          margin-top: 2rem;
-        }
-    </style>
-</head>
-<body>
-<h1>404</h1>
-<p>Oh non ! Cette page s'est fait la malle 🏃‍♂️💨</p>
-<p>{{error_reason}}</p>
-<a href="/">Ramène-moi à la maison</a>
-<div class="snail">🐌</div>
-</body>
-</html>
+<div class="errorpage-container">
+  <h1>404</h1>
+  <p>Oh non ! Cette page s'est fait la malle 🏃‍♂️💨</p>
+  <p>{{error_reason}}</p>
+  <a href="/">Ramène-moi à la maison</a>
+  <div class="snail">🐌</div>
+</div>
+{% endblock %}

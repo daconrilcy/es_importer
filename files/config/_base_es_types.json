@@ -148,5 +148,25 @@
     "name": "flattened",
     "category": "Flattened",
     "description": "Pour des objets JSON imbriqués. Les champs imbriqués sont aplatis pour faciliter les requêtes."
+  },
+  {
+    "name": "rank_feature",
+    "category": "Rank Feature",
+    "description": "Pour des champs de caractéristiques de classement. Utilisé pour le classement des documents."
+  },
+  {
+    "name": "rank_features",
+    "category": "Rank Features",
+    "description": "Pour des champs de caractéristiques de classement. Utilisé pour le classement des documents."
+  },
+  {
+    "name": "point",
+    "category": "Point",
+    "description": "Pour des points géographiques."
+  },
+  {
+    "name": "space_point",
+    "category": "Web preview",
+    "description": "Es Type vide a ne pas être utilisé dans le mapping, mais peut être utilisé pour les affichages Web."
   }
 ]

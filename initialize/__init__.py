@@ -1,252 +1,120 @@
-"""
-This module is used to initialize the configuration of the application.
-"""
-import csv
-import os.path
+import logging
+from pathlib import Path
 
 from config import Config
-from converter import MultiConverter
-from elastic_manager import ElasticSearchManager
-from models.folder_types import FoldersTypes
+from elastic_manager import ElasticManager
 from initialize.index_details import IndexDetails
 from initialize.initconfigfiles import InitConfigFiles
+from initialize.test_file import TestFileFactory
+from models.file_management.file_infos import FileInfos
+from initialize.scan_folder import ScanFolderTools
+
+logger = logging.getLogger(__name__)
 
 
-class InitialeConfig:
+class InitialConfig:
     """
-    Initialize the configuration of the application
-    Create the bases indexes in elasticsearch
+    Orchestrates initialization and indexing for Elasticsearch.
     """
 
     def __init__(self):
         self.config = Config()
-        self.indexes_infos = InitConfigFiles(self.config)
-        self.importer = ElasticSearchManager(self.config)
-        self.folders = FoldersTypes(self.config)
-        self.converter = MultiConverter(self.config)
+        self.indexes = InitConfigFiles(self.config)
+        self.elastic = ElasticManager(self.config)
+        self.test_file_factory = TestFileFactory(self.config)
+        self.folder_scanner = ScanFolderTools()
 
-    def _verifie_or_create_test_csv(self):
+    def _ensure_test_csv_exists(self) -> None:
         """
-        Check if the test.csv file exists, if not create it
-        :return: True if the file exists, False otherwise
+        Ensures the 'test.csv' file exists for initial data.
         """
-        file_name = "test.csv"
-        folder_name = self.folders.data_folder.name
-        filepath = self.folders.get_filepath_by_es_type_filename(folder_name, file_name)
-        if not os.path.isfile(filepath):
-            print(f"📊 {file_name} file not found in {folder_name} - Creating it")
-            with open(filepath, "w", encoding="utf-8", newline="") as file:
-                writer = csv.writer(file)
-                writer.writerow(["id", "name", "type", "size", "path", "date"])
-                writer.writerow(["1", "test", "txt", "100", "C:/test", "2021-01-01"])
-                writer.writerow(["2", "test2", "csv", "200", "C:/test2", "2021-01-02"])
-            print(f"📊 {file_name} file created in {folder_name}")
-        else:
-            print(f"📊 {file_name} file found in {folder_name}")
+        test_csv_path = Path(self.config.file_types.datas.folder_path) / "test.csv"
+        if not test_csv_path.exists():
+            logger.info("📊 'test.csv' not found, creating...")
+            self.test_file_factory.create_datas_test_file()
 
-    def _create_es_index(self, index_infos: IndexDetails):
+    def _create_and_fill_index(self, index: IndexDetails) -> bool:
         """
-        Create an index in elasticsearch
-        :param index_infos: IndexDetails
-        :return: True if the index is created, False otherwise
+        Creates and populates a single Elasticsearch index.
         """
-        if index_infos is None:
-            print("❌ InitialeConfig._create_es_index: index_infos is None")
-            return False
-        return self.importer.recreate_index(index_infos.index_name, index_infos.mapping)
-
-    def create_files_index(self):
-        """
-        Create the file type index in elasticsearch
-        :return: True if the index is created, False otherwise
-        """
-        indexe_infos = self.indexes_infos.index_files
-        if indexe_infos is None:
-            print("❌ InitialeConfig.create_files_index: indexe_infos is None")
-            return False
-        return self._create_es_index(indexe_infos)
-
-    def create_types_index(self):
-        """
-        Create the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        indexe_infos = self.indexes_infos.index_types
-        if indexe_infos is None:
-            print("❌ InitialeConfig.create_types_index: indexe_infos is None")
-            return False
-        return self._create_es_index(indexe_infos)
-
-    def create_es_types_index(self):
-        """
-        Create the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        indexe_infos = self.indexes_infos.index_es_types
-        if indexe_infos is None:
-            print("❌ InitialeConfig.create_types_index: indexe_infos is None")
-            return False
-        return self._create_es_index(indexe_infos)
-
-    def create_es_analyser_index(self):
-        """
-        Create the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        indexe_infos = self.indexes_infos.index_es_analysers
-        if indexe_infos is None:
-            print("❌ InitialeConfig.create_types_index: indexe_infos is None")
-            return False
-        return self._create_es_index(indexe_infos)
-
-    def _fill_index(self, index_infos: IndexDetails):
-        """
-        Fill the index in elasticsearch
-        :param index_infos: IndexDetails
-        :return: True if the index is created, False otherwise
-        """
-        if index_infos is None:
-            print("❌ InitialeConfig._fill_index: index_infos is None")
-            return False
-        docs = index_infos.datas
-        if docs is None or docs is False:
-            print(f"📊 InitialeConfig._fill_index: ❌ No datas to import in {index_infos.index_name} index")
-            return False
-        return self.importer.es_tools.bulk_import(index_infos.index_name, docs)
-
-    def _fill_files_index(self):
-        """
-        Fill the file type index in elasticsearch
-        :return: True if the index is created, False otherwise
-        """
-        return self._fill_index(self.indexes_infos.index_files)
-
-    def _fill_types_index(self):
-        """
-        Fill the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        return self._fill_index(self.indexes_infos.index_types)
-
-    def _fill_es_types_index(self):
-        """
-        Fill the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        return self._fill_index(self.indexes_infos.index_es_types)
-
-    def _fill_es_analyser_index(self):
-        """
-        Fill the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        return self._fill_index(self.indexes_infos.index_es_analysers)
-
-    def create_fully_files_index(self):
-        """
-        Create and fill the file type index in elasticsearch
-        :return: True if the index is created, False otherwise
-        """
-        if self.create_files_index():
-            if self._fill_files_index():
-                if self._add_additionnal_files_in_folders():
-                    return True
-        return False
-
-    def create_fully_types_index(self):
-        """
-        Create and fill the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        if self.create_types_index():
-            if self._fill_types_index():
-                return True
-        return False
-
-    def create_fully_es_types_index(self):
-        """
-        Create and fill the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        if self.create_es_types_index():
-            if self._fill_es_types_index():
-                return True
-        return False
-
-    def create_fully_es_analyser_index(self):
-        """
-        Create and fill the types index in elasticsearch wich contains the types of files
-        :return: True if the index is created, False otherwise
-        """
-        if self.create_es_analyser_index():
-            if self._fill_es_analyser_index():
-                return True
-        return False
-
-    def creates_indexes(self) -> None:
-        """
-        Create and fill the indexes in elasticsearch
-        :return: None
-        """
-        print("***********************start********************************")
-        if self.create_fully_types_index():
-            print("📊 Types index created")
-        else:
-            print("❌ Types index not created")
-        print("***********************************************************")
-        if self.create_fully_files_index():
-            print("📊 Files index created")
-        else:
-            print("❌ Files index not created")
-        print("***********************************************************")
-        if self.create_fully_es_types_index():
-            print("📊 ES Types index created")
-        else:
-            print("❌ ES Types index not created")
-        print("***********************************************************")
-        if self.create_fully_es_analyser_index():
-            print("📊 ES Analyser index created")
-        else:
-            print("❌ ES Analyser index not created")
-        print("***************************end*****************************")
-
-    def _add_additionnal_files_in_folders(self) -> bool:
-        """
-        Check if there are additionnal files in the folder
-        :return: True if there are additionnal files, False otherwise
-        """
-
-        files_in_es = self.importer.get_files_from_es()
-        if files_in_es is None:
-            return False
-        if self.folders.list_folder is None:
+        if not index:
             return False
 
-        files_obj_qualified = self.converter.doc_files_to_file_obj(files_in_es)
-        files_not_in_folder = self.folders.get_files_list_not_in_list(files_obj_qualified)
-
-        if len(files_not_in_folder) == 0:
-            print("📊 InitialeConfig._check_folder_for_additionnal_files: ❌ No files to import")
+        created = self.elastic.index.recreate(index.index_name, index.mapping)
+        if not created:
+            logger.error(f"❌ Failed to create index: {index.index_name}")
             return False
-        self.importer.import_from_files_obj_list(files_not_in_folder)
-        print(f"📊 {len(files_not_in_folder)} new Files imported in {self.config.index_files_name} index")
+
+        if not index.datas:
+            logger.warning(f"⚠️ No data to import for index: {index.index_name}")
+            return True
+
+        imported = self.elastic.tools.bulk_import(index.index_name, index.datas)
+        return imported
+
+    def _import_additional_files(self) -> bool:
+        """
+        Detects and imports new files not yet indexed in Elasticsearch.
+        """
+        indexed_files = self.elastic.files_obj.get_all()
+
+        folders = []
+        for file_type in self.config.file_types.list:
+            folders.append(Path(file_type.folder_path))
+        missing_files = self.folder_scanner.get_missing_files_by_folder(indexed_files, folders)
+
+        files_to_import = []
+        for folder_files in missing_files.values():
+            for filepath in folder_files:
+                files_to_import.append(FileInfos(doc={
+                    "filename": filepath.name,
+                    "extension": filepath.suffix,
+                    "original_filename": filepath.name,
+                    "front_end_filename": filepath.stem,
+                    "type": filepath.parent.name
+                }))
+
+        if not files_to_import:
+            logger.info("📊 No additional files to import.")
+            return False
+
+        self.elastic.files_obj.import_file_infos(files_to_import)
+        logger.info(f"📊 {len(files_to_import)} new files imported into {self.config.index_files_name}.")
         return True
 
-    def run(self):
+    def create_all_indexes(self) -> None:
         """
-        Initialize the configuration of the application
-        :return: None
+        Creates and fills all required Elasticsearch indexes.
         """
-        self._verifie_or_create_test_csv()
-        self.creates_indexes()
+        logger.info("\n*********************** Start Index Creation ************************")
+
+        index_steps = [
+            ("Types", self.indexes.index_types, None),
+            ("Files", self.indexes.index_files, self._import_additional_files),
+            ("ES Types", self.indexes.index_es_types, None),
+            ("ES Analysers", self.indexes.index_es_analysers, None),
+        ]
+
+        for label, index, post_hook in index_steps:
+            success = self._create_and_fill_index(index)
+            if success and post_hook:
+                success = post_hook()
+            logger.info(f"{'📊' if success else '❌'} {label} index {'created' if success else 'not created'}")
+            logger.info("***********************************************************")
+
+        logger.info("*************************** End *****************************\n")
+
+    def run(self) -> None:
+        """
+        Runs the complete initialization routine.
+        """
+        self._ensure_test_csv_exists()
+        self.create_all_indexes()
 
 
 if __name__ == "__main__":
-    ic_test = InitialeConfig()
-    ic_test.run()
-    print(ic_test.importer.show_list_datas("file_details"))
-    print(ic_test.importer.show_list_datas("file_types"))
-    print(ic_test.importer.show_list_datas("es_types", 100))
-    print(ic_test.importer.show_list_datas("es_analysers", 100))
-
-    #print(ic_test.importer.delete_index("file_details"))
+    ic = InitialConfig()
+    ic.run()
+    doc_inits = ic.elastic.files_obj.get_all()
+    for doc_init in doc_inits:
+        print(doc_init)

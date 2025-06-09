@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Elasticsearch Manager</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dropzone.min.css') }}">
     <link rel="stylesheet" type="text/css"
           href="https://daconrilcy.github.io/global_css/css/base.css">
@@ -14,11 +13,20 @@
         {
           "imports": {
             "app": "/static/js/app.js",
-            "navigation": "/static/js/navigation.js",
             "menu": "/static/js/menu.js",
             "list_files": "/static/js/list_files.js",
             "mapping_preview": "/static/js/mapping_preview.js",
-            "dropzone-init": "/static/js/dropzone-init.js"
+            "dropzone-init": "/static/js/dropzone-init.js",
+            "darkmode": "/static/js/darkmode.js",
+            "chunk_table": "/static/js/ui/chunk_table.js",
+            "radio-group": "/static/js/radio-group.js",
+            "navigation": "/static/js/navigation/spa-router.js",
+            "spa-loader": "/static/js/navigation/spa-loader.js",
+            "injector": "/static/js/ui/injector.js",
+            "scroll-horizontal": "/static/js/ui/scroll-horizontal.js",
+            "modify-title": "/static/js/ui/modify-title.js",
+            "btn-list-file": "/static/js/ui/btn-list-file.js",
+            "csv-headers-options": "/static/js/ui/csv-headers-options.js"
           }
         }
     </script>
@@ -26,10 +34,27 @@
         import "app";
     </script>
     <script src="{{ url_for('static', filename='dropzone.min.js') }}" defer></script>
+    <style>
+        html { visibility: hidden; }
+    </style>
+    <script>
+        (function() {
+            try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.add('dark-mode');
+                }
+            } catch(e) {}
+            document.documentElement.style.visibility = 'visible';
+        })();
+    </script>
+    {% block title %}
+    <title> Elasticsearch Manager </title>
+    {% endblock %}
 </head>
 <body>
 
-{% include "navbar.html" %}
+{% include "modules/navbar.html" %}
 
 <div id="content">
     {% block content %}

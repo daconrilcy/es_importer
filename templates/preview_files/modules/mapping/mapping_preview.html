@@ -1,0 +1,73 @@
+<div class="container preview-json">
+    <div class="container wrapper">
+        <div class="container wrapper-headers">
+            <div class="row under-title">
+                <div class="col-md-4 label">
+                    <p><strong>Fichier datas attaché</strong></p>
+                </div>
+                <div class="col-md-8 related-to">
+                    {% set select_field = datas.related_to %}
+                    {% set file_infos_list = datas.list_files_related_to %}
+                    {% include "preview_files/modules/mapping/select_field/select_files.html" %}
+                </div>
+            </div>
+            <div class="row headers">
+                <div class="col-md-2 px-md-3">
+                    <p><strong>Source</strong></p>
+                </div>
+                <div class="col-md-2 px-md-3">
+                    <p><strong>Champ</strong></p>
+                </div>
+                <div class="col-md-1 px-md-3">
+                    <p><strong>Mapped</strong></p>
+                </div>
+                <div class="col-md-2 px-md-3">
+                    <p><strong>Type</strong></p>
+                </div>
+                <div class="col-md-2 px-md-3">
+                    <p><strong>Analyzer</strong></p>
+                </div>
+                <div class="col-md-1 px-md-3">
+                    <p><strong>Fixed value</strong></p>
+                </div>
+                <div class="col-md-2 px-md-3">
+                    <p><strong>Description</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="container wrapper-fields">
+            {% for key, field in datas.fields.items() %}
+            <div class="row">
+                <div class="col-md-2 px-md-3">
+                    {{field.source_field}}
+                </div>
+                <div class="col-md-2 px-md-3">
+                    <input type="text" class="form-control" placeholder="Nom de champ" aria-label="field"
+                           value="{{key}}">
+                </div>
+                <div class="col-md-1 px-md-3">
+                    {% set selected_value = field.mapped_field %}
+                    {% include "preview_files/modules/mapping/select_field/select_field_bool.html" %}
+                </div>
+                <div class="col-md-2 px-md-3">
+                    {% set selected_value = field.type %}
+                    {% set list_values = datas.es_field_types.fields_names %}
+                    {% include "preview_files/modules/mapping/select_field/select_field.html" %}
+                </div>
+                <div class="col-md-2 px-md-3">
+                    {% set selected_value = field.type %}
+                    {% set list_values = datas.es_analyzers.fields_names %}
+                    {% include "preview_files/modules/mapping/select_field/select_field.html" %}
+                </div>
+                <div class="col-md-1 px-md-3">
+                    {% set selected_value = field.fixed_value %}
+                    {% include "preview_files/modules/mapping/select_field/select_field_bool.html" %}
+                </div>
+                <div class="col-md-2 px-md-3">
+                    {{field.description}}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>

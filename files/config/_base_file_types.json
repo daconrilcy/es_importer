@@ -8,7 +8,7 @@
     "url": "uploads/datas",
     "description": "fichier de données",
     "base_layout": "datas.html",
-    "html_preview_layout": "preview_datas.html",
+    "html_preview_layout": "preview_files/modules/csv_datas_preview.html",
     "method_preview": "data_csv"
   },
   {
@@ -20,7 +20,7 @@
     "url": "uploads/mappings",
     "description": "fichier de mapping du fichier de données",
     "base_layout": "mappings.html",
-    "html_preview_layout": "preview_mappings.html",
+    "html_preview_layout": "preview_files/modules/mapping_preview.html",
     "method_preview": "mappings_json"
   },
   {

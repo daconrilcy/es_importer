@@ -3,6 +3,13 @@
 """
 import json
 import os
+import pathlib
+import uuid
+from datetime import datetime, timezone
+from typing import Any
+import platform
+from pathlib import Path
+
 import pandas as pd
 
 
@@ -130,6 +137,7 @@ def manage_filepath(folder: str, filename: str, ext=".csv") -> str | None:
 
     return filepath
 
+
 def get_csv_headers(file_path, sep=";") -> list[str]:
     """
     Get the headers of a CSV file.
@@ -139,6 +147,7 @@ def get_csv_headers(file_path, sep=";") -> list[str]:
     """
     df = pd.read_csv(file_path, nrows=0, sep=sep)
     return df.columns.tolist()
+
 
 def clean_pd_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -176,6 +185,8 @@ def is_json(val) -> bool:
     :return:
     """
     try:
+        if not isinstance(val, str) and not isinstance(val, bytes) and not isinstance(val, bytearray):
+            return False
         obj = json.loads(val)
         return isinstance(obj, dict)
     except ValueError:
@@ -184,12 +195,14 @@ def is_json(val) -> bool:
 
 def is_boolean_column(series: pd.Series) -> bool:
     """
-    Check if a column is a boolean column.
+    Check if a column contains boolean values.
     :param series:
     :return:
     """
+
     vals = series.dropna().unique()
-    return all(val in ["TRUE", "FALSE", "True", "False", "true", "false"] for val in vals)
+    bool_like = {"TRUE", "FALSE", "True", "False", "true", "false", True, False}
+    return all(val in bool_like for val in vals)
 
 
 def is_float_list(val) -> bool:
@@ -207,41 +220,76 @@ def is_float_list(val) -> bool:
 
 def is_list_column(series) -> bool:
     """
-    Check if a column is a list column.
+    Vérifie si une colonne contient des listes de floats (séparées par des virgules).
     :param series:
     :return:
     """
     try:
         sample = series.dropna().iloc[0]
-        return ',' in sample and all(is_float_list(x) for x in series.dropna())
-    except IndexError:
+        if not isinstance(sample, str) or ',' not in sample:
+            return False
+        return all(is_float_list(str(x)) for x in series.dropna())
+    except (IndexError, TypeError):
         return False
 
 
-def infer_es_type_from_values(series) -> str:
+def is_geo_shape(val) -> bool:
+    """
+    Check if a string is a valid GeoJSON shape (Polygon or MultiPolygon).
+    :param val:
+    :return:
+    """
+    try:
+        obj = json.loads(val) if isinstance(val, str) else val
+        return (isinstance(obj, dict) and "type" in obj and "coordinates" in obj and obj["type"]
+                in ["Polygon", "MultiPolygon"])
+    except (ValueError, TypeError, json.JSONDecodeError):
+        return False
+
+
+def infer_es_type_from_values(series: pd.DataFrame) -> str:
     """
     Infer the Elasticsearch type from the values of a column.
     :param series:
     :return:
     """
+
+    clean_series = series.dropna()
+
+    if clean_series.empty:
+        return "text"  # Type par défaut en cas d'absence de valeur
+
     sample = series.dropna().iloc[0]
+
+    # Geo shape ?
+    if is_geo_shape(sample):
+        return "geo_shape"
 
     if is_json(sample):
         return "object"
+
     if is_boolean_column(series):
         return "boolean"
+
     if is_list_column(series):
-        return "float"  # ou "double" si tu veux
+        return "list"
+
     try:
         float(sample)
         return "double"
     except ValueError:
         pass
+
     try:
         pd.to_datetime(sample)
         return "date"
-    except ValueError:
-        return "text"
+    except (ValueError, TypeError):
+        pass
+
+    if series.nunique() < 50 and series.dtype == object:
+        return "keyword"
+
+    return "text"
 
 
 def infer_elasticsearch_mapping_from_csv(file_path, sep='\\t'):
@@ -305,7 +353,8 @@ def preview_csv(filepath: str, sep: str = ',') -> str or bool:
         "last_three_rows": last_three_rows
     }
 
-def get_dict_from_json(filepath: str) -> dict[str]:
+
+def get_dict_from_json(filepath: str) -> dict[Any, Any] | Any:
     """
     Load a JSON file and return its content as a dictionary.
     :param filepath: Path to the JSON file.
@@ -315,12 +364,147 @@ def get_dict_from_json(filepath: str) -> dict[str]:
         print(f"❌ utils - get_dict_from_json - Le fichier {filepath} n'existe pas.")
         return {}
 
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, encoding='utf-8') as f:
         try:
             return json.load(f)
         except json.JSONDecodeError as e:
             print(f"❌ utils - get_dict_from_json - Erreur lors du chargement du fichier JSON : {e}")
             return {}
+
+
+def get_folder_name_from_filepath(filepath: str) -> str:
+    """
+    Get the folder path from a file path.
+    :param filepath: Path to the file.
+    :return: Folder path.
+    """
+    if not os.path.isfile(filepath):
+        print(f"❌ utils - get_folder_from_filepath - Le fichier {filepath} n'existe pas.")
+        return ""
+    file_path = pathlib.Path(filepath)
+    folder_path = file_path.parent.name
+    return folder_path
+
+def get_folder_name_by_folder_path(folder_path: str) -> str | None:
+    """
+    Get the folder name from a folder path.
+    :param folder_path: Path to the folder.
+    :return: Folder name.
+    """
+    if not os.path.isdir(folder_path):
+        print(f"❌ utils - get_folder_name_by_folder_path - Le dossier {folder_path} n'existe pas.")
+        return None
+    folder_path = pathlib.Path(folder_path)
+    folder_name = folder_path.name
+    return folder_name
+
+def get_folder_path_from_filepath(filepath: str) -> str:
+    """
+    Get the folder path from a file path.
+    :param filepath: Path to the file.
+    :return: Folder path.
+    """
+    if not os.path.isfile(filepath):
+        print(f"❌ utils - get_folder_from_filepath - Le fichier {filepath} n'existe pas.")
+        return ""
+    file_path = pathlib.Path(filepath)
+    folder_path = file_path.parent
+    return folder_path
+
+
+def generate_filename(ext=".json"):
+    """
+    Generate a filename with the current date and time.
+    :param ext: Extension of the file.
+    :return: Filename with the current date and time.
+    """
+    if ext[0] != ".":
+        ext = "." + ext
+    return f"{uuid.uuid4()}{ext}"
+
+
+# Dateime functions
+
+def set_datetime_in_str(date_to_set: datetime | str | None = None) -> str:
+    """
+    Convertit une date en chaîne de caractères au format ISO.
+    :param date_to_set: Date à convertir
+    :return: Date au format ISO
+    """
+    if date_to_set is None:
+        date_to_set = datetime.now(timezone.utc)
+    if isinstance(date_to_set, datetime):
+        date_to_set = date_to_set.strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    return _str_date_to_es_datetime(date_to_set)
+
+
+def _str_date_to_es_datetime(date_str: str) -> str | None:
+    """
+    Convertit une date string en format Elasticsearch (%Y-%m-%dT%H:%M:%SZ)
+    :param date_str: chaîne de date à parser
+    :return: chaîne formatée ou None si invalide
+    """
+    if not isinstance(date_str, str):
+        return None
+
+    try:
+        # Cas exact attendu
+        return datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%SZ").strftime("%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        pass
+
+    # Cas ISO 8601 Python (ex: 2025-02-16T23:27:31+00:00)
+    try:
+        dt = datetime.fromisoformat(date_str)
+        dt = dt.astimezone(timezone.utc)
+        return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        pass
+
+    # Cas commun sans timezone
+    try:
+        dt = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+        return dt.replace(tzinfo=timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    except ValueError:
+        pass
+
+    # Dernier recours : timestamp numérique ?
+    try:
+        timestamp = float(date_str)
+        dt = datetime.fromtimestamp(timestamp, tz=timezone.utc)
+        return dt.strftime("%Y-%m-%dT%H:%M:%SZ")
+    except (ValueError, TypeError):
+        pass
+
+    print(f"❌ Date invalide : {date_str}")
+    return None
+
+
+def get_creation_date(path: str | Path) -> float:
+    """
+    Retourne la date de création (timestamp float) d'un fichier.
+    Utilise ctime sous Windows, et birthtime si dispo (Mac), sinon fallback à ctime.
+    """
+    path = Path(path)
+    stat = path.stat()
+
+    if platform.system() == 'Windows':
+        return stat.st_ctime
+    elif hasattr(stat, 'st_birthtime'):  # macOS
+        return stat.st_birthtime
+    else:
+        # Linux fallback — pas la vraie création
+        return stat.st_ctime
+
+
+def normalize_filepath(filepath: str) -> str:
+    """
+    Normalise un chemin de fichier pour qu'il soit compatible avec tous les OS (Windows, Linux, Mac).
+    Retourne une chaîne de caractères utilisable par open(), pandas, etc.
+    """
+    return str(Path(filepath).expanduser().resolve())
+
 
 # Exemple d'utilisation
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import pandas as pd
-from elastic_type import EsFieldType
+from models.elastic_specifiques import EsFieldType
 from utils import sanitaze_string
 
 

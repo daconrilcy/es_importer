@@ -1,0 +1,194 @@
+[
+  {
+    "name": "text",
+    "category": "Text",
+    "description": "Used for full-text search with analyzers.",
+    "deprecated": false
+  },
+  {
+    "name": "keyword",
+    "category": "Exact Value",
+    "description": "Used for filtering, sorting, and aggregations on exact values.",
+    "deprecated": false
+  },
+  {
+    "name": "long",
+    "category": "Numeric",
+    "description": "Signed 64-bit integer values.",
+    "deprecated": false
+  },
+  {
+    "name": "integer",
+    "category": "Numeric",
+    "description": "Signed 32-bit integer values.",
+    "deprecated": false
+  },
+  {
+    "name": "short",
+    "category": "Numeric",
+    "description": "Signed 16-bit integer values.",
+    "deprecated": false
+  },
+  {
+    "name": "byte",
+    "category": "Numeric",
+    "description": "Signed 8-bit integer values.",
+    "deprecated": false
+  },
+  {
+    "name": "double",
+    "category": "Numeric",
+    "description": "Double-precision 64-bit IEEE 754 floating point values.",
+    "deprecated": false
+  },
+  {
+    "name": "float",
+    "category": "Numeric",
+    "description": "Single-precision 32-bit IEEE 754 floating point values.",
+    "deprecated": false
+  },
+  {
+    "name": "half_float",
+    "category": "Numeric",
+    "description": "Half-precision 16-bit IEEE 754 floating point values.",
+    "deprecated": false
+  },
+  {
+    "name": "scaled_float",
+    "category": "Numeric",
+    "description": "Floating point values scaled by a fixed multiplier (useful for fixed-precision decimals).",
+    "deprecated": false
+  },
+  {
+    "name": "boolean",
+    "category": "Boolean",
+    "description": "True/false values.",
+    "deprecated": false
+  },
+  {
+    "name": "date",
+    "category": "Date",
+    "description": "Date values in configurable formats (default is ISO 8601).",
+    "deprecated": false
+  },
+  {
+    "name": "date_range",
+    "category": "Range",
+    "description": "Range of date values.",
+    "deprecated": false
+  },
+  {
+    "name": "float_range",
+    "category": "Range",
+    "description": "Range of floating-point values.",
+    "deprecated": false
+  },
+  {
+    "name": "double_range",
+    "category": "Range",
+    "description": "Range of double-precision floating-point values.",
+    "deprecated": false
+  },
+  {
+    "name": "integer_range",
+    "category": "Range",
+    "description": "Range of 32-bit integer values.",
+    "deprecated": false
+  },
+  {
+    "name": "long_range",
+    "category": "Range",
+    "description": "Range of 64-bit integer values.",
+    "deprecated": false
+  },
+  {
+    "name": "geo_point",
+    "category": "Geo",
+    "description": "A single point on Earth, used for distance and geo queries.",
+    "deprecated": false
+  },
+  {
+    "name": "geo_shape",
+    "category": "Geo",
+    "description": "Complex geographical shapes such as polygons or envelopes.",
+    "deprecated": false
+  },
+  {
+    "name": "shape",
+    "category": "Geometry",
+    "description": "Non-geographic geometries (e.g., Cartesian coordinates).",
+    "deprecated": false
+  },
+  {
+    "name": "ip",
+    "category": "Network",
+    "description": "IPv4 and IPv6 addresses.",
+    "deprecated": false
+  },
+  {
+    "name": "object",
+    "category": "Object",
+    "description": "Generic JSON object. Fields inside are not individually indexed.",
+    "deprecated": false
+  },
+  {
+    "name": "nested",
+    "category": "Object",
+    "description": "JSON objects indexed as separate nested documents for accurate queries.",
+    "deprecated": false
+  },
+  {
+    "name": "flattened",
+    "category": "Object",
+    "description": "Flattens JSON objects into a single field for easier querying.",
+    "deprecated": false
+  },
+  {
+    "name": "binary",
+    "category": "Binary",
+    "description": "Base64-encoded binary data (not searchable).",
+    "deprecated": false
+  },
+  {
+    "name": "completion",
+    "category": "Autocomplete",
+    "description": "For auto-complete suggestions (suggesters).",
+    "deprecated": false
+  },
+  {
+    "name": "search_as_you_type",
+    "category": "Autocomplete",
+    "description": "Optimized for search-as-you-type with incremental prefix matching.",
+    "deprecated": false
+  },
+  {
+    "name": "token_count",
+    "category": "Text",
+    "description": "Stores the number of tokens after analysis.",
+    "deprecated": false
+  },
+  {
+    "name": "dense_vector",
+    "category": "Vector",
+    "description": "Fixed-length numerical vector for similarity and ML use cases.",
+    "deprecated": false
+  },
+  {
+    "name": "sparse_vector",
+    "category": "Vector",
+    "description": "Sparse vector (deprecated since ES 8.0).",
+    "deprecated": true
+  },
+  {
+    "name": "rank_feature",
+    "category": "Ranking",
+    "description": "Feature used in ranking documents by relevance.",
+    "deprecated": false
+  },
+  {
+    "name": "rank_features",
+    "category": "Ranking",
+    "description": "Multiple ranking features stored in a single field.",
+    "deprecated": false
+  }
+]

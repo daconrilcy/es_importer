@@ -1,48 +1,33 @@
-import { loadPage } from "./navigation.js";
-import { initializeDynamicComponents } from "./navigation.js";
-import { initFileRowEvents } from "./list_files.js";
-import { initMappingPreviewEvents} from "./mapping_preview.js";
+import { initDarkMode } from "darkmode";
+import { initChunkedTablePagination } from "chunk_table";
+import { initRadioGroups } from "radio-group";
+import { setActiveMenuItemFromPath } from "menu";
+import { initSpaNavigation } from "./navigation/spa-router.js";
+import { initHorizontalScroll } from "./ui/scroll-horizontal.js";
+import { initModifyTitle } from "./ui/modify-title.js";
+import { initBtnListFile } from "./ui/btn-list-file.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-    initPage(); // première initialisation
+document.addEventListener('DOMContentLoaded', () => {
+    initDarkMode();
+    initChunkedTablePagination();
+    initRadioGroups();
+    initSpaNavigation();
+    initHorizontalScroll();
+    initModifyTitle();
+    initBtnListFile();
+    
+    history.replaceState(
+        { html: document.getElementById('content').innerHTML, url: location.pathname },
+        '',
+        location.pathname
+    );
+    setActiveMenuItemFromPath();
 
-    // liens internes SPA
-    document.addEventListener("click", function (event) {
-        const link = event.target.closest("a");
-        if (link && link.getAttribute("href") && link.origin === window.location.origin) {
-            console.log("SPA navigation vers :", link.getAttribute("href"));
-            event.preventDefault();
-            loadPage(link.getAttribute("href")).then(() => {
-                initPage(); // réinitialise les events après chargement dynamique
-                initPreview();
-            });
-        }
-    });
-
-    // navigation arrière / avant
-    window.addEventListener("popstate", (event) => {
-        if (event.state?.url) {
-            loadPage(event.state.url, false).then(() => {
-                initPage();
-            });
-        }
-    });
-
-    document.addEventListener("components:reinit", () => {
-        initPage();
-    });
-    document.addEventListener("preview:reinit", () => {
-        initMappingPreviewEvents();
-    });
-
+    // Initialisation Dropzone si on est sur /upload
+    if (window.location.pathname === '/upload') {
+        import('./dropzone-init.js').then(mod => {
+            mod.initializeDropzone();
+        });
+    }
+   
 });
-
-function initPage() {
-    let itrow = initFileRowEvents();
-    initializeDynamicComponents();
-
-    // si tu as d’autres composants
-}
-function initPreview(){
-    initMappingPreviewEvents();
-}

@@ -1,0 +1,8 @@
+{
+  "front_name": "import pays",
+  "importers": [
+    "pays.json"
+  ],
+  "description": "Importation des payss",
+  "last_used": "2025-04-09T12:00:00+00:00"
+}

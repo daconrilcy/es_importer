@@ -7,19 +7,22 @@
       "file_type": {
         "type": "keyword"
       },
-      "file_name": {
+      "filename": {
         "type": "text"
       },
-      "initial_file_name": {
+      "original_filename": {
         "type": "text"
       },
-      "front_end_file_name": {
+      "front_end_filename": {
         "type": "text"
       },
       "separator": {
         "type": "keyword"
       },
       "upload_date": {
+        "type": "date"
+      },
+      "date_updated": {
         "type": "date"
       },
       "description": {

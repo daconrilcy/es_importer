@@ -1,0 +1,43 @@
+from typing import Optional, Dict, Union, Any
+
+from config import Config
+from models.mapping_management.fields_management.remplacement import ReplacementField
+
+
+class PhoneticField(ReplacementField):
+
+    def __init__(self, name: str, data: dict, config: Optional[Config] = None):
+        super().__init__(name, data, config)
+
+        self._phonetics = Dict[str, bool]
+        self._set(data)
+        self._default_phonetic = {"soundex": False, "metaphone": False, "metaphone3": False}
+        self._keep_original = True
+        self._use_first_column = False
+
+    def _additional_set(self, data: dict):
+        self._phonetics = data.get("phonetic", self._default_phonetic)
+        for key, value in self._phonetics.items():
+            self._phonetics[key] = self._bool_set(value)
+
+    def _bool_set(self, bool_string: Union[str, bool, int]) -> bool:
+        if isinstance(bool_string, bool):
+            return bool_string
+        elif isinstance(bool_string, str):
+            return bool_string.lower() in {"true", "1", "yes", "on", "oui", "tru"}
+        elif isinstance(bool_string, int):
+            return bool_string >= 1
+        else:
+            return False
+
+    @property
+    def phonetics(self) -> Dict[str, bool]:
+        return self._phonetics
+
+    @property
+    def dict(self) -> Dict[str, Any]:
+        data = super().dict
+        data["phonetic"] = self.phonetics
+        data["category"] = "phonetic"
+
+        return data

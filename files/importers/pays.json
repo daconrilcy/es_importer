@@ -3,5 +3,6 @@
   "datas_filename": "curiexplore-pays.csv",
   "datas_separator": ";",
   "mapping_filename": "mapping_pays.json",
-  "index_name": "pays"
+  "index_name": "pays",
+  "description": "Importation des pays a partir de curiexplore.csv"
 }

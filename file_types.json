@@ -1,0 +1,44 @@
+[
+  {
+    "name": "datas",
+    "accepted_extensions": [
+      "csv"
+    ],
+    "description": "fichier de données"
+  },
+  {
+    "name": "mappings",
+    "accepted_extensions": [
+      "json"
+    ],
+    "description": "fichier de mapping du fichier de données"
+  },
+  {
+    "name": "importers",
+    "accepted_extensions": [
+      "json"
+    ],
+    "description": "fichier decrivant la configuration de l'importation"
+  },
+  {
+    "name": "processors",
+    "accepted_extensions": [
+      "json"
+    ],
+    "description": "fichier decrivant la configuration du traitement des données de plusieurs fichiers"
+  },
+  {
+    "name": "bulks",
+    "accepted_extensions": [
+      "json"
+    ],
+    "description": "fichier contenant les docs à importer.Les documents ont été préalablement traités par un processor"
+  },
+  {
+    "name": "completions",
+    "accepted_extensions": [
+      "csv"
+    ],
+    "description": "fichier de completion des données de fichier de données"
+  }
+]

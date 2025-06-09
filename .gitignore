@@ -1,4 +1,4 @@
 passcrypter.py
 .idea
-.venv
 __pycache__
+.env.prod

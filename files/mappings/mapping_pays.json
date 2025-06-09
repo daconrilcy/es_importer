@@ -1,5 +1,4 @@
 {
-  "mapping_name": "mapping pays",
   "related_to": "curiexplore-pays.csv",
   "mapping": {
     "iso2": {

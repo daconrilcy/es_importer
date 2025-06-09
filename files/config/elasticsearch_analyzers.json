@@ -1,0 +1,354 @@
+[
+  {
+    "name": "standard",
+    "language": "Tous",
+    "tokenization": "Unicode Text Segmentation",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Analyzer par défaut, basé sur Unicode Text Segmentation."
+  },
+  {
+    "name": "simple",
+    "language": "Tous",
+    "tokenization": "Caractères non lettres",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Divise le texte à chaque caractère non-lettre, met en minuscules."
+  },
+  {
+    "name": "whitespace",
+    "language": "Tous",
+    "tokenization": "Espaces",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Divise uniquement sur les espaces blancs, ne change pas la casse."
+  },
+  {
+    "name": "stop",
+    "language": "Anglais par défaut",
+    "tokenization": "Comme simple",
+    "stopwords": "Oui",
+    "stemming": "Non",
+    "description": "Comme simple mais supprime les stopwords (anglais par défaut)."
+  },
+  {
+    "name": "keyword",
+    "language": "Tous",
+    "tokenization": "Aucune",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Ne divise pas le texte, retourne le texte entier comme un seul token."
+  },
+  {
+    "name": "pattern",
+    "language": "Tous",
+    "tokenization": "Regex personnalisée",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Utilise une regex pour diviser le texte (paramètre 'pattern' requis)."
+  },
+  {
+    "name": "fingerprint",
+    "language": "Tous",
+    "tokenization": "Basée sur simple",
+    "stopwords": "Oui",
+    "stemming": "Non",
+    "description": "Trie les tokens, enlève doublons, minuscule, concatène avec un séparateur."
+  },
+  {
+    "name": "french",
+    "language": "Français",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le français avec suppression des stopwords et stemming léger."
+  },
+  {
+    "name": "english",
+    "language": "Anglais",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'anglais avec stemming et stopwords."
+  },
+  {
+    "name": "cjk",
+    "language": "Chinois, Japonais, Coréen",
+    "tokenization": "Bigrammes",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Analyseur spécialisé pour les langues CJK, basé sur bigrammes."
+  },
+  {
+    "name": "icu_analyzer",
+    "language": "Multilingue",
+    "tokenization": "Unicode avancé",
+    "stopwords": "Optionnel",
+    "stemming": "Non",
+    "description": "Analyseur basé sur ICU, supporte la normalisation Unicode, casse, accents (plugin requis)."
+  },
+  {
+    "name": "arabic",
+    "language": "Arabe",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'arabe avec suppression des stopwords et stemming."
+  },
+  {
+    "name": "armenian",
+    "language": "Arménien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'arménien avec stopwords et stemming."
+  },
+  {
+    "name": "basque",
+    "language": "Basque",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le basque avec stopwords et stemming."
+  },
+  {
+    "name": "bengali",
+    "language": "Bengali",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le bengali avec stopwords et stemming."
+  },
+  {
+    "name": "brazilian",
+    "language": "Portugais brésilien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le portugais brésilien."
+  },
+  {
+    "name": "bulgarian",
+    "language": "Bulgare",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le bulgare avec stopwords et stemming."
+  },
+  {
+    "name": "catalan",
+    "language": "Catalan",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le catalan avec stopwords et stemming."
+  },
+  {
+    "name": "czech",
+    "language": "Tchèque",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le tchèque avec stopwords et stemming."
+  },
+  {
+    "name": "danish",
+    "language": "Danois",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le danois avec stopwords et stemming."
+  },
+  {
+    "name": "dutch",
+    "language": "Néerlandais",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le néerlandais avec stopwords et stemming."
+  },
+  {
+    "name": "estonian",
+    "language": "Estonien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'estonien avec stopwords et stemming."
+  },
+  {
+    "name": "finnish",
+    "language": "Finnois",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le finnois avec stopwords et stemming."
+  },
+  {
+    "name": "galician",
+    "language": "Galicien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le galicien avec stopwords et stemming."
+  },
+  {
+    "name": "german",
+    "language": "Allemand",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'allemand avec stopwords et stemming."
+  },
+  {
+    "name": "greek",
+    "language": "Grec",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le grec avec stopwords et stemming."
+  },
+  {
+    "name": "hindi",
+    "language": "Hindi",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'hindi avec stopwords et stemming."
+  },
+  {
+    "name": "hungarian",
+    "language": "Hongrois",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le hongrois avec stopwords et stemming."
+  },
+  {
+    "name": "indonesian",
+    "language": "Indonésien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'indonésien avec stopwords et stemming."
+  },
+  {
+    "name": "irish",
+    "language": "Irlandais",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'irlandais avec stopwords et stemming."
+  },
+  {
+    "name": "italian",
+    "language": "Italien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'italien avec stopwords et stemming."
+  },
+  {
+    "name": "latvian",
+    "language": "Letton",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le letton avec stopwords et stemming."
+  },
+  {
+    "name": "lithuanian",
+    "language": "Lituanien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le lituanien avec stopwords et stemming."
+  },
+  {
+    "name": "norwegian",
+    "language": "Norvégien",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le norvégien avec stopwords et stemming."
+  },
+  {
+    "name": "persian",
+    "language": "Persan",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le persan avec stopwords et stemming."
+  },
+  {
+    "name": "portuguese",
+    "language": "Portugais",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le portugais avec stopwords et stemming."
+  },
+  {
+    "name": "romanian",
+    "language": "Roumain",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le roumain avec stopwords et stemming."
+  },
+  {
+    "name": "russian",
+    "language": "Russe",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le russe avec stopwords et stemming."
+  },
+  {
+    "name": "serbian",
+    "language": "Serbe",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le serbe avec stopwords et stemming."
+  },
+  {
+    "name": "sorani",
+    "language": "Sorani (kurde central)",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le sorani avec stopwords et stemming."
+  },
+  {
+    "name": "spanish",
+    "language": "Espagnol",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour l'espagnol avec stopwords et stemming."
+  },
+  {
+    "name": "swedish",
+    "language": "Suédois",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le suédois avec stopwords et stemming."
+  },
+  {
+    "name": "thai",
+    "language": "Thaï",
+    "tokenization": "Segmentateur thaï",
+    "stopwords": "Non",
+    "stemming": "Non",
+    "description": "Analyseur pour le thaï utilisant un segmentateur spécifique."
+  },
+  {
+    "name": "turkish",
+    "language": "Turc",
+    "tokenization": "Unicode + filtre langue",
+    "stopwords": "Oui",
+    "stemming": "Oui",
+    "description": "Analyseur pour le turc avec stopwords et stemming."
+  }
+]

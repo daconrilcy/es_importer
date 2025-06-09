@@ -22,8 +22,7 @@ class MultiConverter:
         """
         files_obj = []
         for fdoc in doc_files:
-            temp_file = FileInfos()
-            temp_file.set_from_doc(fdoc)
+            temp_file = FileInfos(doc=fdoc)
 
             if folder_filter is not None and temp_file.type is not None:
                 if folder_filter == temp_file.type.name:
