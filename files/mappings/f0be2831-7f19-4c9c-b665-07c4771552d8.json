@@ -1,0 +1,68 @@
+{
+  "related_to": "curiexplore-pays.csv",
+  "mapping": {
+    "iso2": {
+      "source_field": "iso2",
+      "description": "Code ISO alpha-2 du pays",
+      "mapped": true,
+      "type": "keyword",
+      "analyzer": null,
+      "fixed_value": false,
+      "value": null
+    },
+    "iso3": {
+      "source_field": "iso3",
+      "description": "Code ISO alpha-3 du pays",
+      "mapped": true,
+      "type": "keyword",
+      "analyzer": null,
+      "fixed_value": false,
+      "value": null
+    },
+    "name_en": {
+      "source_field": "name_en",
+      "description": "Nom du pays en anglais",
+      "mapped": true,
+      "type": "text",
+      "analyzer": "english",
+      "fixed_value": false,
+      "value": null
+    },
+    "name_fr": {
+      "source_field": "name_fr",
+      "description": "Nom du pays en français",
+      "mapped": true,
+      "type": "text",
+      "analyzer": "french",
+      "fixed_value": false,
+      "value": null
+    },
+    "geo_point": {
+      "source_field": "latlng",
+      "description": "Coordonnées géographiques du pays (latitude, longitude)",
+      "mapped": true,
+      "type": "geo_point",
+      "analyzer": null,
+      "fixed_value": false,
+      "value": null
+    },
+    "geo_shape": {
+      "source_field": "geometry",
+      "description": "Géométrie du pays",
+      "mapped": true,
+      "type": "geo_shape",
+      "analyzer": null,
+      "fixed_value": false,
+      "value": null
+    },
+    "flag": {
+      "source_field": "flag",
+      "description": "URL de l'image du drapeau du pays",
+      "mapped": true,
+      "type": "text",
+      "analyzer": null,
+      "fixed_value": false,
+      "value": null
+    }
+  }
+}

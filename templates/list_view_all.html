@@ -1,0 +1,33 @@
+{% if layout %}
+{% extends "layout.html" %}
+{% endif %}
+
+{% block content %}
+
+<div class="card list-card mx-auto">
+    <div class="card-header">
+        <div class="card-title">
+            <h2>Liste des fichiers</h2>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            {% set ntypes = files_by_type|length %}
+            {% set class_col = 'colx-md-' ~ ntypes %}
+            {% for file_type, files in files_by_type.items() %}
+            <div class="{{ class_col }} file-list-all">
+                <h2>{{ file_type }}</h2>
+                <ul>
+                    {% for file in files %}
+                    <li data-file-id="{{ file.id }}" data-file-type="{{ file.type.name }}"
+                        data-file-name="{{ file.filename }}">
+                        <a href="/file/preview/{{ file.id }}" data-spa-link>{{ file.front_end_filename[:30] }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

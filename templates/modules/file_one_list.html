@@ -1,0 +1,16 @@
+{% if url_name is not defined %}
+{% set url_name = 'file_preview_table' %}
+{% endif %}
+
+<ul>
+    {% for file_infos in files_one_list %}
+    <li class="file-one-list-item">
+        <button class="btn btn-visualize btn-list-file" data-file-id="{{ file_infos.id }}"
+                data-file-type="{{ file_infos.type_name }}">
+            {{ file_infos.front_end_filename[0:25] }}
+        </button>
+        <button class="btn btn-delete btn-list-file" data-file-id="{{ file_infos.id }}"><span
+                class="glyphicon glyphicon-remove"></span></button>
+    </li>
+    {% endfor %}
+</ul>

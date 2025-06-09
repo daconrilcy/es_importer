@@ -1,0 +1,24 @@
+<nav class="navbar">
+    <div class="menu-toggle" id="menuToggle" aria-expanded="false" aria-label="Ouvrir le menu" role="button">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    <a href="{{ url_for('home') }}" class="logo" data-spa-link>
+        <img src="/static/img/elasticsearch_logo_only.png" alt="ElasticSearch Manager" width="24" height="24"
+             class="img-logo">
+        Elasticsearch Manager
+    </a>
+    
+
+    {% if session.get('logged_in') %}
+    <ul class="menu">
+        <li class="menu-item" data-route="upload"><a href="/upload" data-spa-link>upload</a></li>
+        <li class="menu-item" data-route="file-list-all"><a href="/file/list-all" data-spa-link>list files</a></li>
+        <li class="menu-item" data-route="importers"><a href="/import/importers" data-spa-link>Importer</a></li>
+        <li class="menu-item" data-route="processors"><a href="/import/processors" data-spa-link>Processes</a></li>
+        <li class="menu-item"><a href="{{ url_for('logout') }}">Déconnexion</a></li>
+    </ul>
+    {% endif %}
+    {% include "modules/_toggle_dark_mode.html" %}
+</nav>

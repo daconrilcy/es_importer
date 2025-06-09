@@ -1,0 +1,46 @@
+{%if layout %}
+{% extends "layout.html" %}
+{% endif %}
+{% block content %}
+<div class="card mt-5 card-upload">
+    <div class="card-header">
+        <div class="card-title">
+            <h2>Importer un fichier</h2>
+        </div>
+        <div class="switch-filetype-btns">
+            <span>Type de fichier</span>
+            <div id="filetype-switch-group" class="btn-group radio-behavior" role="group" aria-label="Type de fichier">
+                {% for ft in file_types.list %}
+                <button type="button" class="btn btn-secondary{% if loop.first %} active{% endif %}"
+                        data-type="{{ ft.name }}" data-extensions="{{ ft.accepted_extensions_str }}">{{
+                    ft.name|capitalize }}
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <form action="/dropzone-upload" class="dropzone" id="my-dropzone">
+            <input type="hidden" name="filetype" id="hidden-filetype" value="{{ file_types.list[0].name }}">
+            <div class="dz-default dz-message">
+                <div class="icon-upload mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="lucide lucide-file-up w-8 h-8 text-primary">
+                        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path>
+                        <path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+                        <path d="M12 12v6"></path>
+                        <path d="m15 15-3-3-3 3"></path>
+                    </svg>
+                </div>
+                <button class="dz-button dz-main-message" type="button">Drop files here to upload</button>
+                <button class="dz-button dz-type-file" type="button">accept {{
+                    file_types.list[0].accepted_extensions_str }}
+                </button>
+            </div>
+        </form>
+        <div id="upload-success" style="display:none;" class="success-message">Fichier importé avec succès !</div>
+        <div id="upload-error" style="display:none;" class="error-message">Erreur lors de l'importation.</div>
+    </div>
+</div>
+{% endblock %} 

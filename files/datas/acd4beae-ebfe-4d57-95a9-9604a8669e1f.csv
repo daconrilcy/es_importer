@@ -1,0 +1,31 @@
+name,category,description
+text,Text,Pour les recherches en texte intégral.
+keyword,Keyword,Pour des valeurs exactes.
+long,Numeric,Pour des valeurs numériques entières.
+integer,Numeric,Pour des valeurs numériques entières.
+short,Numeric,Pour des valeurs numériques entières.
+byte,Numeric,Pour des valeurs numériques entières.
+double,Numeric,Pour des valeurs numériques décimales.
+float,Numeric,Pour des valeurs numériques décimales.
+half_float,Numeric,Pour des valeurs numériques décimales.
+scaled_float,Numeric,Pour des valeurs numériques décimales. Permet d’utiliser une précision définie.
+boolean,Boolean,Pour des valeurs booléennes.
+date,Date,Pour des dates. Formats personnalisables (ISO 8601 par défaut).
+geo_point,Geo,Pour des coordonnées géographiques.
+geo_shape,Geo,Pour des formes géographiques.
+ip,IP,Pour des adresses IP.
+completion,Text,Pour des champs de saisie semi-automatique.
+token_count,Text,Pour des champs de comptage de tokens.
+object,Object,Pour des objets JSON imbriqués.
+nested,Nested,Pour des objets JSON imbriqués. Similaire à object mais avec support pour les requêtes relationnelles.
+binary,Binary,Pour des données encodées en base64.
+integer_range,Range,Pour des plages de valeurs entières.
+long_range,Range,Pour des plages de valeurs longues.
+float_range,Range,Pour des plages de valeurs décimales.
+double_range,Range,Pour des plages de valeurs décimales précises.
+date_range,Range,Pour des plages de dates. Formats personnalisables.
+dense_vector,Vector,Pour des vecteurs denses.
+sparse_vector,Vector,Pour des vecteurs épars.
+search_as_you_type,Text,Pour des champs de saisie semi-automatique.
+shape,Shape,Pour des formes géométriques non géographiques (ex. : coordonnées cartésiennes).
+flattened,Flattened,Pour des objets JSON imbriqués. Les champs imbriqués sont aplatis pour faciliter les requêtes.

@@ -2,3 +2,8 @@ passcrypter.py
 .idea
 __pycache__
 .env.prod
+/tests/
+/build/
+/dist/
+/.venv/
+/csv_importer.egg-info/

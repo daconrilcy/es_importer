@@ -1,0 +1,155 @@
+{% extends "preview_files/main_layout.html" %}
+
+{% block page_title %}
+<h2 class="page-title">Gestion des fichiers Sources de Datas</h2>
+{% endblock %}
+
+{% block datas_zone %}
+<div class="csv-zone">
+  <div class="csv-container">
+    <button class="scroll-lateral-button left"><i class="glyphicon glyphicon-left"></i></button>
+    <button class="scroll-lateral-button right"><i class="glyphicon glyphicon-right"></i></button>
+    <div class="csv-table-wrapper">
+      <table class="csv-table">
+        <thead>
+          <tr>
+            {% for header in headers %}<th>{{ header }}</th>{% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              {% for cell in row %}<td>{{ cell }}</td>{% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div id="chunkBarFixed" class="pagination-bar">
+    <div id="chunkBar"></div>
+  </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+(function() {
+  let chunkIndex = 0;
+  const chunkSize = 50;
+
+  function updateTableRows() {
+    const bodyRows = document.querySelectorAll('.csv-table tbody tr');
+    const totalRows = bodyRows.length;
+    const chunkCount = Math.ceil(totalRows / chunkSize);
+
+    bodyRows.forEach((tr, i) => {
+      tr.style.display = (i >= chunkIndex * chunkSize && i < (chunkIndex + 1) * chunkSize) ? '' : 'none';
+    });
+
+    const chunkBar = document.getElementById('chunkBar');
+    chunkBar.innerHTML = '';
+
+    const nav = document.createElement('nav');
+    const ul = document.createElement('ul');
+    ul.className = 'pagination';
+
+    // Previous
+    const prevLi = document.createElement('li');
+    prevLi.className = 'page-item' + (chunkIndex === 0 ? ' disabled' : '');
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'page-link';
+    prevBtn.innerHTML = "<i class='glyphicon glyphicon-left'></i>";
+    prevBtn.onclick = () => {
+      if (chunkIndex > 0) {
+        chunkIndex--;
+        updateTableRows();
+      }
+    };
+    prevLi.appendChild(prevBtn);
+    ul.appendChild(prevLi);
+
+    // Pages
+    const maxVisiblePages = 5;
+    let startPage = Math.max(0, chunkIndex - Math.floor(maxVisiblePages / 2));
+    let endPage = Math.min(chunkCount, startPage + maxVisiblePages);
+    if (endPage - startPage < maxVisiblePages) {
+      startPage = Math.max(0, endPage - maxVisiblePages);
+    }
+
+    for (let i = startPage; i < endPage; ++i) {
+      const pageLi = document.createElement('li');
+      pageLi.className = 'page-item' + (i === chunkIndex ? ' active' : '');
+      const pageBtn = document.createElement('button');
+      pageBtn.className = 'page-link';
+      pageBtn.textContent = (i + 1);
+      pageBtn.onclick = function() {
+        chunkIndex = i;
+        updateTableRows();
+      };
+      pageLi.appendChild(pageBtn);
+      ul.appendChild(pageLi);
+    }
+
+    // Next
+    const nextLi = document.createElement('li');
+    nextLi.className = 'page-item' + (chunkIndex === chunkCount - 1 ? ' disabled' : '');
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'page-link';
+    nextBtn.innerHTML = "<i class='glyphicon glyphicon-right'></i>";
+    nextBtn.onclick = () => {
+      if (chunkIndex < chunkCount - 1) {
+        chunkIndex++;
+        updateTableRows();
+      }
+    };
+    nextLi.appendChild(nextBtn);
+    ul.appendChild(nextLi);
+
+    nav.appendChild(ul);
+    chunkBar.appendChild(nav);
+  }
+
+  function setupScrollButtons() {
+  const container = document.querySelector('.csv-container'); // on revient à container ici
+  const wrapper = document.querySelector('.csv-table-wrapper');
+  const leftBtn = document.querySelector('.scroll-lateral-button.left');
+  const rightBtn = document.querySelector('.scroll-lateral-button.right');
+
+  leftBtn.onclick = () => { wrapper.scrollBy({ left: -200, behavior: 'smooth' }); };
+  rightBtn.onclick = () => { wrapper.scrollBy({ left: 200, behavior: 'smooth' }); };
+
+}
+
+
+  function applyDarkMode(mode) {
+    if (mode === 'dark') {
+      document.body.classList.add('dark-mode');
+      document.getElementById('darkToggle').checked = true;
+    } else {
+      document.body.classList.remove('dark-mode');
+      document.getElementById('darkToggle').checked = false;
+    }
+  }
+
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    applyDarkMode(savedTheme);
+  } else {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyDarkMode(prefersDark ? 'dark' : 'light');
+  }
+
+  document.getElementById('darkToggle').addEventListener('change', () => {
+    const newMode = document.getElementById('darkToggle').checked ? 'dark' : 'light';
+    applyDarkMode(newMode);
+    localStorage.setItem('theme', newMode);
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updateTableRows();
+    setupScrollButtons();
+  });
+})();
+</script>
+{% endblock %}

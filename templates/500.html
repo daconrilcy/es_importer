@@ -1,0 +1,14 @@
+{% if layout %}{% extends "layout.html" %}{% endif %}
+{% block title %}
+<title>500 - Elasticsearch Manager</title>
+{% endblock %}
+{% block content %}
+
+<div class="errorpage-container">
+  <h1>500</h1>
+  <p>Oups… Le serveur a fait une overdose de bits 🤯💥</p>
+  <p>{{ error_reason }}</p>
+  <a href="/">Ramène-moi à la maison</a>
+  <div class="snail">🐌</div>
+</div>
+{% endblock %}

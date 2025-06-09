@@ -1,0 +1,28 @@
+Metadata-Version: 2.4
+Name: csv_importer
+Version: 0.1.0
+Summary: Un outil d'import CSV vers Elasticsearch
+Author: Le Conda
+Classifier: Programming Language :: Python :: 3
+Description-Content-Type: text/markdown
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: summary
+
+# CSV Importer
+
+Outil Python pour importer des fichiers CSV et les convertir en objets compatibles avec Elasticsearch.
+
+## Fonctionnalités
+
+- Prévisualisation des fichiers
+- Mapping vers Elasticsearch
+- Analyse du contenu
+- Visualisation web
+
+## Installation
+
+```bash
+pip install .

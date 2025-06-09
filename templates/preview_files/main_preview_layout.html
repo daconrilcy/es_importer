@@ -1,0 +1,15 @@
+{%if layout %}
+{% extends "layout.html" %}
+{% endif %}
+{% block content %}
+{% include "preview_files/modules/layout_title.html" %}
+
+<div class="page-layout">
+    <div class="file-list" id="file-one-list">
+        {% include "modules/file_one_list.html" %}
+    </div>
+    <div id="datas-zone">
+        {% include "preview_files/modules/data_zone.html" %}
+    </div>
+</div>
+{% endblock %}

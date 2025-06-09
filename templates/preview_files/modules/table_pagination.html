@@ -1,0 +1,46 @@
+<div id="chunkBar">
+    <nav>
+        <ul class="pagination">
+            {# Saut de -10 #}
+            {% set jump_back = [0, chunk_index - 10]|max %}
+            <li class="page-item{% if chunk_index == 0 %} disabled{% endif %}">
+                <button class="page-link" data-chunk="{{ jump_back }}">
+                    <span class="glyphicon glyphicon-left"></span>
+                    <span class="glyphicon glyphicon-left"></span>
+                </button>
+            </li>
+            {# Précédent #}
+            <li class="page-item{% if chunk_index == 0 %} disabled{% endif %}">
+                <button class="page-link" data-chunk="{{ chunk_index - 1 }}"><span
+                        class="glyphicon glyphicon-left"></span>
+                </button>
+            </li>
+            {# Affichage des numéros de page #}
+            {% set max_visible = 5 %}
+            {% set start = [0, chunk_index - max_visible // 2]|max %}
+            {% set end = [num_chunks, start + max_visible]|min %}
+            {% if end - start < max_visible %}
+            {% set start = [0, end - max_visible]|max %}
+            {% endif %}
+            {% for i in range(start, end) %}
+            <li class="page-item{% if i == chunk_index %} active{% endif %}">
+                <button class="page-link" data-chunk="{{ i }}">{{ i + 1 }}</button>
+            </li>
+            {% endfor %}
+            {# Suivant #}
+            <li class="page-item{% if chunk_index == num_chunks - 1 %} disabled{% endif %}">
+                <button class="page-link" data-chunk="{{ chunk_index + 1 }}">
+                    <span class="glyphicon glyphicon-right"></span>
+                </button>
+            </li>
+            {# Saut de +10 #}
+            {% set jump_forward = [num_chunks - 1, chunk_index + 10]|min %}
+            <li class="page-item{% if chunk_index == num_chunks - 1 %} disabled{% endif %}">
+                <button class="page-link" data-chunk="{{ jump_forward }}">
+                    <span class="glyphicon glyphicon-right"></span>
+                    <span class="glyphicon glyphicon-right"></span>
+                </button>
+            </li>
+        </ul>
+    </nav>
+</div> 
