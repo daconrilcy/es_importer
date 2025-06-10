@@ -1,4 +1,3 @@
-from abc import ABC
 from typing import Any
 
 from config import Config
@@ -8,7 +7,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class MappingSourceField(BaseMappingField, ABC):
+class MappingSourceField(BaseMappingField):
     """
     Représente un champ de mapping pour un index Elasticsearch ou un fichier de configuration.
     Permet d'encapsuler les propriétés liées à ce champ et d'y accéder proprement via des getters/setters.
@@ -31,8 +30,8 @@ class MappingSourceField(BaseMappingField, ABC):
         self._set(data)
 
     def _set(self, data: dict):
-        if self.category != "source_fields":
-            raise ValueError("SourceField : Le champ 'category' doit avoir la valeur 'source_fields'.")
+        if self.category != "source_field":
+            raise ValueError("SourceField : Le champ 'category' doit avoir la valeur 'source_field'.")
         self.source_field = data.get("source_field")
         self.mapped = data.get("mapped", False)
         self.type = data.get("type")
@@ -111,3 +110,6 @@ class MappingSourceField(BaseMappingField, ABC):
         base_dict["fixed_value"] = self.fixed_value
         base_dict["value"] = self.value
         return base_dict
+
+    def __str__(self):
+        return self.dict.__str__()

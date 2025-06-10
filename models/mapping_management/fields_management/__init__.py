@@ -1,4 +1,4 @@
-from typing import Dict, Any, Optional, Type
+from typing import Dict, Any, Optional, Type, Union
 
 from config import Config
 import logging
@@ -23,7 +23,7 @@ class FieldsManager:
         "remplacement_fields": ReplacementField,
     }
 
-    def __init__(self, mapping: Dict[str, Dict[Any]], config: Optional[Config] = None) -> None:
+    def __init__(self, mapping: Dict[str, Union[str, Dict[str, Any]]], config: Optional[Config] = None) -> None:
         """
         Initialise le gestionnaire de champs à partir du mapping brut.
 
@@ -34,7 +34,7 @@ class FieldsManager:
         self._fields: Dict[str, Any] = {}
         self._initialize_fields(mapping)
 
-    def _initialize_fields(self, mapping: Dict[str, Dict[Any]]) -> None:
+    def _initialize_fields(self, mapping: Dict[str, Union[str, Dict[str, Any]]]) -> None:
         """
         Valide et instancie les champs à partir du mapping brut.
 
@@ -86,3 +86,34 @@ class FieldsManager:
         :return: Dictionnaire des champs.
         """
         return self._fields
+
+
+if __name__ == "__main__":
+    mapping_test_data = {
+        "related_to": "curiexplore-pays.csv",
+        "mapping": {
+            "iso2": {
+                "category": "source_field",
+                "source_field": "iso2",
+                "description": "Code ISO alpha-2 du pays",
+                "mapped": True,
+                "type": "keyword",
+                "analyzer": None,
+                "fixed_value": False,
+                "value": None
+            },
+            "iso3": {
+                "category": "source_field",
+                "source_field": "iso3",
+                "description": "Code ISO alpha-3 du pays",
+                "mapped": True,
+                "type": "keyword",
+                "analyzer": None,
+                "fixed_value": False,
+                "value": None
+            }
+        }
+    }
+
+    fields_manager_test = FieldsManager(mapping_test_data)
+    print(fields_manager_test.fields)

@@ -1,11 +1,10 @@
-from abc import ABC, abstractmethod
 from typing import Any, Dict
 
 from models.mapping_management.es_types import EsTypes
 from config import Config
 
 
-class BaseMappingField(ABC):
+class BaseMappingField:
     """
     Classe de base pour représenter un champ de mapping générique avec un nom,
     une catégorie et une description. Doit être étendue par des classes concrètes.
@@ -24,8 +23,8 @@ class BaseMappingField(ABC):
         self._category: str = ""
         self._description: str = ""
 
-        self._set(data)
         self._initialize_base_fields(data)
+        self._set(data)
 
     def _initialize_base_fields(self, data: Dict[str, Any]) -> None:
         """
@@ -46,7 +45,6 @@ class BaseMappingField(ABC):
         if not self._category:
             raise ValueError("Le champ 'category' est obligatoire.")
 
-    @abstractmethod
     def _set(self, data: Dict[str, Any]) -> None:
         """
         Méthode à implémenter dans les classes filles pour définir les champs spécifiques.
@@ -60,7 +58,6 @@ class BaseMappingField(ABC):
             f"description={self._description}>"
         )
 
-    @abstractmethod
     @property
     def dict(self) -> Dict[str, Any]:
         """

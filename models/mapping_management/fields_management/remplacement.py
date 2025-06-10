@@ -120,3 +120,9 @@ class ReplacementField(BaseMappingField):
         data["filename"] = self.filename
 
         return data
+
+    def __repr__(self):
+        return (f"<MappingField name={self._name}, category={self._category}, description={self._description}, "
+                f"type_completion={self._type_completion}, original_field={self._original_field}, "
+                f"column_names={self._column_names}, keep_original={self._keep_original}, "
+                f"use_first_column={self._use_first_column}, filename={self._filename}>")
