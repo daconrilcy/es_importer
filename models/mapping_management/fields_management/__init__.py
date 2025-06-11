@@ -3,9 +3,10 @@ from typing import Dict, Any, Optional, Type, Union
 from config import Config
 import logging
 
+from models.mapping_management.fields_management.fixed import FixedValueMappingField
 from models.mapping_management.fields_management.phonetic import PhoneticField
 from models.mapping_management.fields_management.remplacement import ReplacementField
-from models.mapping_management.fields_management.source_fields import MappingSourceField
+from models.mapping_management.fields_management.source import MappingSourceField
 
 logger = logging.getLogger(__name__)
 
@@ -18,9 +19,10 @@ class FieldsManager:
     """
 
     FIELD_CLASS_MAP: Dict[str, FieldClassType] = {
-        "source_field": MappingSourceField,
+        "source": MappingSourceField,
         "phonetic": PhoneticField,
-        "remplacement_fields": ReplacementField,
+        "remplacement": ReplacementField,
+        "fixed_value": FixedValueMappingField
     }
 
     def __init__(self, mapping: Dict[str, Union[str, Dict[str, Any]]], config: Optional[Config] = None) -> None:
@@ -93,7 +95,7 @@ if __name__ == "__main__":
         "related_to": "curiexplore-pays.csv",
         "mapping": {
             "iso2": {
-                "category": "source_field",
+                "category": "source",
                 "source_field": "iso2",
                 "description": "Code ISO alpha-2 du pays",
                 "mapped": True,
@@ -103,7 +105,7 @@ if __name__ == "__main__":
                 "value": None
             },
             "iso3": {
-                "category": "source_field",
+                "category": "source",
                 "source_field": "iso3",
                 "description": "Code ISO alpha-3 du pays",
                 "mapped": True,
@@ -111,7 +113,12 @@ if __name__ == "__main__":
                 "analyzer": None,
                 "fixed_value": False,
                 "value": None
-            }
+            },
+            "country_name": {
+                "category": "fixed_value",
+                "description": "Nom du pays",
+                "value": "France"
+            },
         }
     }
 

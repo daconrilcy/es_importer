@@ -8,14 +8,17 @@ class PhoneticField(ReplacementField):
 
     def __init__(self, name: str, data: dict, config: Optional[Config] = None):
         super().__init__(name, data, config)
-
         self._phonetics = Dict[str, bool]
-        self._set(data)
         self._default_phonetic = {"soundex": False, "metaphone": False, "metaphone3": False}
-        self._keep_original = True
-        self._use_first_column = False
+        self._set(data)
 
-    def _additional_set(self, data: dict):
+    def _set(self, data: dict):
+        super()._set(data)
+        self._keep_original = True
+        self._use_first_column = True
+        self._phonetics_set(data)
+
+    def _phonetics_set(self, data: dict):
         self._phonetics = data.get("phonetic", self._default_phonetic)
         for key, value in self._phonetics.items():
             self._phonetics[key] = self._bool_set(value)

@@ -30,8 +30,8 @@ class MappingSourceField(BaseMappingField):
         self._set(data)
 
     def _set(self, data: dict):
-        if self.category != "source_field":
-            raise ValueError("SourceField : Le champ 'category' doit avoir la valeur 'source_field'.")
+        if data is None:
+            return
         self.source_field = data.get("source_field")
         self.mapped = data.get("mapped", False)
         self.type = data.get("type")

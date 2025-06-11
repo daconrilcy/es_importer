@@ -37,7 +37,12 @@ class BaseMappingField:
         if not isinstance(data, dict):
             raise TypeError("Le champ 'data' doit être un dictionnaire.")
 
-        self._category: str = data.get("category")
+        self._category: str = data.get("category", None)
+        if not self._category:
+            raise ValueError(
+                f"La categorie du champ '{self.name}' est manquante ou vide."
+                f"Veuillez fournir une categorie pour ce champ'."
+            )
         self._description: str = data.get("description", "")
 
         if not self._name:
@@ -57,6 +62,9 @@ class BaseMappingField:
             f"category={self._category}, "
             f"description={self._description}>"
         )
+
+    def set(self, data: Dict[str, Any]) -> None:
+        self._set(data)
 
     @property
     def dict(self) -> Dict[str, Any]:

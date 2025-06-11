@@ -35,9 +35,8 @@ class ReplacementField(BaseMappingField):
         """
         Valide et extrait les champs obligatoires à partir des données.
         """
-        if self.category != "remplacement_fields":
-            raise ValueError("ReplacementField : Le champ 'category' doit avoir la valeur 'remplacement_fields'.")
-
+        if data is None:
+            return
         self._type_completion = self._require(data, "_type_completion")
         self._original_field = self._require(data, "original_field")
         self._column_names = self._require(data, "column_names")
@@ -111,7 +110,7 @@ class ReplacementField(BaseMappingField):
     @property
     def dict(self) -> dict:
         data = super().dict
-        data["category"] = "remplacement_fields"
+        data["category"] = self.category
         data["type_completion"] = self.type_completion
         data["original_field"] = self.original_field
         data["column_names"] = self.column_names
