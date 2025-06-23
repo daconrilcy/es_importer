@@ -1,0 +1,25 @@
+{% if modifier is not defined %}
+{% set modifier = false %}
+{% endif %}
+<span class="glyphicon glyphicon-modify" data-action="modify"
+      data-field-name="{{field.name}}">
+                    </span>
+{% if generate %}
+<span class="glyphicon glyphicon-drop" data-action="generate"
+      data-field-name="{{field.name}}">
+                    </span>
+{% endif %}
+{% if modifier %}
+<span class="glyphicon glyphicon-modify-accept" data-action="accept"
+      data-field-name="{{field.name}}">
+                    </span>
+<span class="glyphicon glyphicon-modify-revert" data-action="revert"
+      data-field-name="{{field.name}}">
+                    </span>
+{% endif %}
+<span class="glyphicon glyphicon-plus" data-action="duplicate"
+      data-field-name="{{field.name}}">
+                    </span>
+<span class="glyphicon glyphicon-remove" data-action="delete"
+      data-field-name="{{field.name}}">
+                    </span>

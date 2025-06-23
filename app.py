@@ -1,12 +1,18 @@
-from flask import render_template, redirect, url_for, session, request, jsonify
+from flask import render_template, request, jsonify
 from flask import Flask
+
 from config import Config
-from models.file_management.uploader import FileUploader
+
 from models.file_management.file_loader import FileLoader
 from elastic_manager import ElasticManager
 import logging
 
 from models.insertPhonetic import PhoneticRequestInserter
+from routes.base import bases_road
+from routes.file_common import common_file
+from routes.mapping.under_title import under_title
+from routes.upload import upload_road
+from routes.renderer import render_page
 
 logger = logging.getLogger(__name__)
 
@@ -20,71 +26,10 @@ def create_app():
     app = Flask(__name__)  # ✅ Conserve cette instance, ne la redéfinis pas plus tard
     app.config.from_object(config)
     app.secret_key = config.app_web_secret
-
-    @app.before_request
-    def check_authentication():
-        """
-        Check if the user is authenticated
-        :return:
-        """
-        allowed_routes = ["login", "static"]
-        if not session.get("logged_in") and request.endpoint not in allowed_routes:
-            return redirect(url_for("login"))
-        return None
-
-    def render_page(template, **kwargs):
-        """
-        Render a page with the layout if the user is authenticated
-        :param template:
-        :param kwargs:
-        :return: HTML page
-        """
-        if session.get('logged_in'):
-            is_ajax = request.headers.get("X-Requested-With") == "XMLHttpRequest"
-            return render_template(template, layout=not is_ajax, **kwargs)
-        return render_template("login.html")
-
-    @app.route('/')
-    def index():
-        """
-        Index page
-        :return:
-        """
-        return render_page('home.html')
-
-    @app.route('/home')
-    def home():
-        """
-        Home page
-        :return:
-        """
-        return render_page('home.html')
-
-    @app.route('/login', methods=['POST', 'GET'])
-    def login():
-        """
-        Login page
-        :return:
-        """
-        if request.method == 'GET':
-            return render_template("login.html")
-
-        username = request.form.get('login')
-        password = request.form.get('password')
-
-        if Config().check_app_credentials(username, password):
-            session['logged_in'] = True
-            return redirect("home")
-        return jsonify({"error": "Identifiants invalides"}), 401
-
-    @app.route('/logout')
-    def logout():
-        """
-        Logout page
-        :return:
-        """
-        session.pop('logged_in', None)
-        return redirect(url_for('login'))
+    app.register_blueprint(bases_road)
+    app.register_blueprint(under_title)
+    app.register_blueprint(upload_road)
+    app.register_blueprint(common_file)
 
     @app.route("/404")
     def not_found_page():
@@ -209,7 +154,7 @@ def create_app():
         if not preview:
             return render_page("500.html", error_reason="Erreur lors de la prévisualisation du fichier")
 
-        return render_template("preview_files/modules/data_zone.html", datas=preview)
+        return render_template("preview_files/data_zone.html", datas=preview)
 
     @app.route('/file/preview-table/<file_id>/<int:chunk>', methods=['GET'])
     def file_preview_table(file_id: str, chunk: int = 0):
@@ -220,13 +165,13 @@ def create_app():
         """
         file_loader = FileLoader()
         preview = file_loader.get_full_preview(chunk_index=chunk, file_id=file_id)
-        return render_template("preview_files/modules/csv_datas_preview.html", datas=preview)
+        return render_template("preview_files/csv/csv_datas_preview.html", datas=preview)
 
     @app.route('/file/preview-table-path/<encoded_file_path>/<int:chunk>', methods=['GET'])
     def file_preview_table_path(encoded_file_path: str, chunk: int = 0):
         file_loader = FileLoader()
         previewer = file_loader.get_datas_preview(encoded_file_path=encoded_file_path, chunk_index=chunk)
-        return render_template("preview_files/modules/csv_table.html", datas=previewer)
+        return render_template("preview_files/csv/csv_table.html", datas=previewer)
 
     @app.route('/file/chunk-rows/<encoded_file_path>/<int:chunk>', methods=['GET'])
     def file_chunk_rows(encoded_file_path: str, chunk: int = 0):
@@ -235,17 +180,25 @@ def create_app():
         """
         file_loader = FileLoader()
         rows = file_loader.get_rows_preview(encoded_file_path, chunk)
-        return render_template("preview_files/modules/csv_rows.html", rows=rows)
+        return render_template("preview_files/csv/csv_rows.html", rows=rows)
 
     @app.route('/file/pagination-data/<int:chunk_index>/<int:num_chunks>/<int:chunk_size>', methods=['GET'])
     def file_pagination_data(chunk_index: int, num_chunks: int, chunk_size: int):
         """
         File pagination data
         """
-        return render_template("preview_files/modules/table_pagination.html", chunk_index=chunk_index,
+        return render_template("preview_files/csv/table_pagination.html", chunk_index=chunk_index,
                                num_chunks=num_chunks, chunk_size=chunk_size)
 
-    # @profile
+    @app.route('/file/data/headers/<encode_filepath>', methods=['GET'])
+    def get_headers_file_data(encode_filepath: str):
+        """
+        Get headers of a file
+        """
+        file_loader = FileLoader()
+        headers = file_loader.get_file_data_headers(encode_filepath)
+        return jsonify({"headers": headers}), 200
+
     @app.route('/file/add/phonetic/', methods=['POST'])
     def file_add_phonex():
         """ File add phonex page """
@@ -294,30 +247,6 @@ def create_app():
     #     if not result:
     #         return jsonify({"error": "Erreur lors de la sauvegarde"}), 500
     #     return jsonify({"success": True, "message": "Document sauvegardé"}), 200
-
-    @app.route('/dropzone-upload', methods=['POST'])
-    def dropzone_upload():
-        """
-        Route d'upload compatible Dropzone (un fichier par requête).
-        Retourne un JSON avec le résultat de l'upload (upload, FileInfos, indexation ES, séparateur auto).
-        """
-        if 'file' not in request.files:
-            return jsonify({"success": False, "error": "Aucun fichier envoyé."}), 400
-        file = request.files['file']
-        file_type = request.form.get('filetype')
-        if not file_type:
-            return jsonify({"success": False, "error": "Type de fichier manquant."}), 400
-        uploader = FileUploader()
-        result = uploader.upload_and_index_file(file, file_type)
-        status = 200 if result.get("success") else 400
-        return jsonify(result), status
-
-    @app.route('/upload', methods=['GET'])
-    def upload():
-        """
-        Page d'upload de fichiers avec Dropzone et sélection du type de fichier.
-        """
-        return render_page('upload.html', file_types=config.file_types)
 
     return app
 

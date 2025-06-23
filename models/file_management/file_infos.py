@@ -136,6 +136,7 @@ class FileInfos:
         doc = {
             "filename": self.filename,
             "original_filename": self.original_filename,
+            "front_end_filename": self.front_end_filename,
             "type": self.type_name,
             "extension": self.extension,
             "separator": self.separator,

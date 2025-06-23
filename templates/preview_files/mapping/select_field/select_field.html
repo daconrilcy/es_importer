@@ -1,0 +1,35 @@
+{% if field_name is not defined %}
+    {% if field is not defined %}
+        {% set field_name = 'select_field' %}
+    {% else %}
+        {% set selected_value = field.value %}
+        {% set field_name = field.name %}
+    {% endif %}
+{% endif %}
+{% if add_empty is not defined %}
+    {% set add_empty = False %}
+{% endif %}
+{% if value_empty is not defined %}
+    {% set value_empty = "" %}
+{% endif %}
+{% if screen_empty is not defined %}
+    {% set screen_empty = "New" %}
+{% endif %}
+
+
+{% if selected_value is not defined %}
+    {% set selected_value = value_empty %}
+{% endif %}
+<select class="form-select" data-field="{{ field_name }}"
+        data-original-value="{{ selected_value }}" data-source="{{ field_name }}">
+    {% if add_empty %}
+    <option value="{{ value_empty }}">{{ screen_empty }}</option>
+    {% endif %}
+    {% for value in list_values %}
+    {% if selected_value == value %}
+    <option value="{{ value }}" selected>{{ value }}</option>
+    {% else %}
+    <option value="{{ value }}"> {{ value }}</option>
+    {% endif %}
+    {% endfor %}
+</select>

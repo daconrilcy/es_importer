@@ -17,7 +17,7 @@ class RequestValidator:
     ]
     _VALID_SEPARATORS = [",", ", ", ";", "; ", "\t", "|"]
 
-    _VALID_COLUMN_KEYS = ["column", "colonne", "col", "source_column"]
+    _VALID_COLUMN_KEYS = ["column", "colonne", "col", "source_column", "original_field", "field"]
 
     _VALID_NEW_COLUMN_KEYS = ["new_column", "new_col", "new_colonne"]
 

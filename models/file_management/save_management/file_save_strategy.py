@@ -5,6 +5,13 @@ from typing import Any
 from pandas import DataFrame
 from werkzeug.datastructures import FileStorage
 
+from models.file_management.file_utls import FileUtils
+from models.file_type import FileTypes
+
+import logging
+
+logger = logging.getLogger(__name__)
+
 
 class FileSaveStrategy(ABC):
     """
@@ -72,6 +79,32 @@ class TXTLocalFileSaveStrategy(BaseLocalSaveStrategy):
 
     def save(self, content: str, filename: str) -> str:
         file_path = self._get_file_path(filename)
+        with file_path.open(mode='w', encoding='utf-8') as file:
+            file.write(content)
+        return str(file_path)
+
+
+class MappingFileSaveStrategy(BaseLocalSaveStrategy):
+    """
+    Stratégie de sauvegarde pour fichiers JSON.
+    """
+
+    def __init__(self):
+        folder_path = FileTypes().mappings.folder_path
+        super().__init__(folder_path)
+
+    def save(self, content: str, filename: str = None, filepath: str = None) -> str:
+        file_path: Path = None
+        if filename is None and filepath is None:
+            logger.error("MappingFileSaveStrategy.save: filename or filepath is None")
+            filename = FileUtils().generate_filename()
+            file_path = self._get_file_path(filename)
+        elif filepath is not None:
+            file_path = Path(filepath)
+            filename = file_path.name
+            file_path = self._get_file_path(filename)
+        elif filename is not None:
+            file_path = self._get_file_path(filename)
         with file_path.open(mode='w', encoding='utf-8') as file:
             file.write(content)
         return str(file_path)

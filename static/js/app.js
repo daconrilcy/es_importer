@@ -6,6 +6,7 @@ import { initSpaNavigation } from "./navigation/spa-router.js";
 import { initHorizontalScroll } from "./ui/scroll-horizontal.js";
 import { initModifyTitle } from "./ui/modify-title.js";
 import { initBtnListFile } from "./ui/btn-list-file.js";
+import { InitMappingPreview } from "./ui/mapping/mapping.js";
 
 document.addEventListener('DOMContentLoaded', () => {
     initDarkMode();
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initHorizontalScroll();
     initModifyTitle();
     initBtnListFile();
+    InitMappingPreview();
     
     history.replaceState(
         { html: document.getElementById('content').innerHTML, url: location.pathname },

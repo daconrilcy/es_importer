@@ -1,5 +1,10 @@
+from pathlib import Path
 from typing import List, Any, Tuple
+
+from models.file_management.filepath_codec import FilePathCodec
+
 from elastic_manager import ElasticManager
+from models.file_management.readers.csv_file_reader import CsvFileReader
 from models.web_viewer.csv_previewer import FileCsvPreviewer
 from config import Config
 import logging
@@ -7,6 +12,7 @@ import logging
 from models.web_viewer.mapping_previewer import MappingFilePreviewer
 
 logger = logging.getLogger(__name__)
+
 
 
 class FileLoader:
@@ -117,3 +123,22 @@ class FileLoader:
             previewer.build_from_file_infos(file_infos)
 
         return previewer
+
+    def get_file_data_headers(self, encoded_filepath: str) -> List[str]:
+        """
+        Récupère les en-tetes des données d'un fichier CSV.
+
+        Args:
+            encoded_filepath (str): Chemin du fichier CSV.
+
+        Returns:
+            List[str]: Liste des en-tetes des données.
+        """
+        if encoded_filepath is None or not isinstance(encoded_filepath, str):
+            return []
+        filepath = FilePathCodec.decode(encoded_filepath)
+        filepath = Path(filepath).resolve()
+        if not Path(filepath).is_file():
+            return []
+        file_reader = CsvFileReader(filepath, chunk_size=self.chunk_size)
+        return file_reader.headers

@@ -1,0 +1,73 @@
+<div class="field-preview" data-source="{{ field.name }}" data-category="remplacement">
+    <div class="row header">
+        <div class="col-md-2">
+            Type Completion
+        </div>
+        <div class="col-md-2">
+            Original field
+        </div>
+        <div class="col-md-2">
+            Name
+        </div>
+        <div class="col-md-1">
+            Keep Original
+        </div>
+        {% include "preview_files/mapping/rows_modif/_header_filename.html" %}
+        <div class="col-md-1">
+            Use 1st col
+        </div>
+        <div class="col-md-2">
+            Actions
+        </div>
+    </div>
+    <div class="row field" data-source="{{ field.name }}" data-category="remplacement">
+        <div class="col-md-2"
+             data-field="type"
+             data-source="{{ field.name }}"
+             data-original-value="{{ field.type_completion }}">
+            <input type="text" value="{{ field.type_completion }}"
+                   data-original-value="{{ field.type_completion }}"
+                   data-field="type"
+                   data-source="{{ field.name }}">
+        </div>
+        <div class="col-md-2"
+             data-field="original_field"
+             data-source="{{ field.name }}"
+             data-original-value="{{ field.original_field }}">
+            {{field.original_field}}
+        </div>
+        <div class="col-md-2" data-field="name" data-source="{{ field.name }}">
+            <input type="text" value="{{ field.name }}"
+                   data-original-value="{{ field.name }}"
+                   data-field="name"
+                   data-source="{{ field.name }}">
+        </div>
+        <div class="col-md-1" data-field="keep_original" data-source="{{ field.name }}">
+            {% set field_name = "keep_original"%}
+            {% set selected_value = field.keep_original %}
+            {% include "preview_files/mapping/select_field/select_field_bool.html" %}
+
+        </div>
+        <div class="col-md-2" data-field="filename" data-source="{{ field.name }}">
+            {% set field_name = "filename" %}
+            {% set selected_value = field.filename %}
+            {% set list_values = datas.list_completion_files %}
+            {% set add_empty = True %}
+            {% set value_empty = "" %}
+            {% set screen_empty = "New" %}
+            {% include "preview_files/mapping/select_field/select_field.html" %}
+        </div>
+        <div class="col-md-1" data-field="use_first_column" data-source="{{ field.name }}">
+            {% set field_name = "use_first_column"%}
+            {% set selected_value = field.use_first_column %}
+            {% include "preview_files/mapping/select_field/select_field_bool.html" %}
+
+        </div>
+        <div class="col-md-2 actions">
+            {% set modifier = true %}
+            {% set generate = true %}
+            {% include "preview_files/mapping/rows_modif/icones_actions_rows.html"%}
+        </div>
+    </div>
+
+</div>

@@ -74,4 +74,4 @@ if __name__ == '__main__':
     }
 
     sample_request_json = json.dumps(sample_request)
-    print(PhoneticRequestInserter().insert_phonetic_from_request(sample_request))
+    print(PhoneticRequestInserter().insert(sample_request))

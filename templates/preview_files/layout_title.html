@@ -1,0 +1,16 @@
+{% set type_file = datas.type_name if datas.type_name is defined else "" %}
+
+<div class="page-title">
+    <div class="page-title-left"></div>
+    <h2>Aperçu du fichier {{ type_file }}</h2>
+    <input type="text" id="file_front_name" value="{{ datas.front_end_filename }}"
+           data-original-value="{{ datas.front_end_filename }}"
+           data-file-id="{{ datas.id }}"
+           data-sep="{{ datas.sep }}"
+    >
+    <div class="modify-buttons">
+        <span class="glyphicon glyphicon-modify visible"></span>
+        <span class="glyphicon glyphicon-modify-accept"></span>
+        <span class="glyphicon glyphicon-modify-revert"></span>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+<div class="container preview-json mapping-preview-container">
+    <div class="container wrapper">
+        <div class="container wrapper-headers">
+            {% include "preview_files/mapping/undertitle/main_subtitle.html" %}
+            <div class="row headers">
+                <div class="col-md-2 px-md-2">
+                    <p><strong>Type</strong></p>
+                </div>
+                <div class="col-md-2 px-md-2">
+                    <p><strong>Name</strong></p>
+                </div>
+                <div class="col-md-2 px-md-2">
+                    <p><strong>Source</strong></p>
+                </div>
+                <div class="col-md-5 px-md-5">
+                    <p><strong>Description</strong></p>
+                </div>
+                <div class="col-md-1 px-md-1">
+                    <p><strong>Modify</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="container wrapper-fields">
+            {% for key, field in datas.fields.items() %}
+            {% include "preview_files/mapping/row_preview.html" %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% if datas.fields %}
+{% set es_analysers = datas.es_analyzers.fields_names%}
+{% set es_types = datas.es_field_types.fields_names %}
+<div class="mapping-preview-hidden-container-modif">
+    {% for key, field in datas.fields.items() %}
+    {% if field.category == "source"%}
+    {% include "preview_files/mapping/rows_modif/row_source_field.html" %}
+    {% elif field.category == "remplacement"%}
+    {% include "preview_files/mapping/rows_modif/row_completion.html" %}
+    {% elif field.category == "phonetic"%}
+    {% include "preview_files/mapping/rows_modif/row_phonetic.html" %}
+    {% elif field.category == "fixed_value"%}
+    {% include "preview_files/mapping/rows_modif/row_fixed_value.html" %}
+    {% else %}
+    {{field.category}}
+    {% endif %}
+    {% endfor %}
+</div>
+{%endif %}

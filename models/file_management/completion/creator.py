@@ -83,30 +83,36 @@ class CsvManualMultiColumnsBuilder:
     def output_path(self, filename: str):
         self._output_csv = self.file_types.completions.folder_path / filename
 
-    def create_csv(self) -> None:
+    def create_csv(self) -> bool | str:
         """
         Crée un nouveau CSV contenant la colonne source et les colonnes vides.
         """
         if self.separator is None:
             self.separator = self.reader.sep
-        for chunk_index in range(self.reader.num_chunks):
-            chunk_values = self.reader.get_column_chunk(self.source_column, chunk_index, self.chunk_size)
-            data = {self.source_column: chunk_values}
+        try:
+            for chunk_index in range(self.reader.num_chunks):
+                chunk_values = self.reader.get_column_chunk(self.source_column, chunk_index, self.chunk_size)
+                data = {self.source_column: chunk_values}
 
-            for col in self.new_columns:
-                data[col] = ["" for _ in chunk_values]
+                for col in self.new_columns:
+                    data[col] = ["" for _ in chunk_values]
 
-            df = pd.DataFrame(data)
+                df = pd.DataFrame(data)
 
-            df.to_csv(
-                self.output_path,
-                index=False,
-                sep=self.reader.sep,
-                encoding=self.reader.encoding,
-                mode='w' if chunk_index == 0 else 'a',
-                header=chunk_index == 0,
-                lineterminator="\n"
-            )
+                df.to_csv(
+                    self.output_path,
+                    index=False,
+                    sep=self.reader.sep,
+                    encoding=self.reader.encoding,
+                    mode='w' if chunk_index == 0 else 'a',
+                    header=chunk_index == 0,
+                    lineterminator="\n"
+                )
+        except Exception as e:
+            logger.error(
+                f"CsvManualMultiColumnsBuilder - Une erreur s'est produite lors de la création du fichier CSV : {e}")
+            return False
+        return Path(self.output_path).name
 
     def inject_values_in_chunks(self, df_values: pd.DataFrame, start_row: int = 0) -> None:
         """
@@ -170,17 +176,17 @@ class CsvManualMultiColumnsBuilder:
         shutil.move(tmp_path, self.output_path)
 
 
-
-
 if __name__ == "__main__":
     creator_test = CsvManualMultiColumnsBuilder(
         source_column="name_fr",
         new_columns=["name_en", "name_es", "name_it"],
         original_filepath="C:/dev/py/csv_importer/files/datas/curiexplore-pays.csv",
+        filename="test.csv",
         chunk_size=10
     )
 
-    creator_test.create_csv()
+    result_test =creator_test.create_csv()
+    print(result_test)
 
     data_to_inject_test = pd.DataFrame({
         "name_en": ["France", "Spain", "Italy"],

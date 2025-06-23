@@ -2,6 +2,10 @@ from datetime import datetime, timezone
 from typing import Dict, Any, Union, List
 
 from elastic_manager import ElasticSearchTools
+from models.file_management.file_infos import FileInfos
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class ElasticFileDocuments:
@@ -93,3 +97,18 @@ class ElasticFileDocuments:
         if doc and len(doc) > 0:
             return doc[0].get("front_end_filename", filename)
         return filename
+
+    def get_by_filename(self, filename: str) -> Union[Dict[str, Any], bool]:
+        """
+        Récupère un document de l'index de fichiers au format FileInfos
+        :param filename:
+        :return:
+        """
+        file_docs = self.es_tools.search_by_query(self.index_name, {"query": {"match": {"filename": filename}}})
+        if not file_docs or len(file_docs) == 0:
+            logger.error("FileInfosDocuments : le document n'a pas pu'être trouvé")
+            return None
+        file_doc = file_docs[0]
+        if not file_doc:
+            return None
+        return FileInfos(doc=file_doc)

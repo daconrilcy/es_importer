@@ -1,6 +1,6 @@
 from typing import Any, Dict
 
-from models.mapping_management.es_types import EsTypes
+from models.elastic_specifiques import EsTypes
 from config import Config
 
 

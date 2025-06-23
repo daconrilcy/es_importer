@@ -1,68 +1,90 @@
 {
-  "related_to": "curiexplore-pays.csv",
-  "mapping": {
-    "iso2": {
-      "source_field": "iso2",
-      "description": "Code ISO alpha-2 du pays",
-      "mapped": true,
-      "type": "keyword",
-      "analyzer": null,
-      "fixed_value": false,
-      "value": null
-    },
-    "iso3": {
-      "source_field": "iso3",
-      "description": "Code ISO alpha-3 du pays",
-      "mapped": true,
-      "type": "keyword",
-      "analyzer": null,
-      "fixed_value": false,
-      "value": null
-    },
-    "name_en": {
-      "source_field": "name_en",
-      "description": "Nom du pays en anglais",
-      "mapped": true,
-      "type": "text",
-      "analyzer": "english",
-      "fixed_value": false,
-      "value": null
-    },
-    "name_fr": {
-      "source_field": "name_fr",
-      "description": "Nom du pays en français",
-      "mapped": true,
-      "type": "text",
-      "analyzer": "french",
-      "fixed_value": false,
-      "value": null
-    },
-    "geo_point": {
-      "source_field": "latlng",
-      "description": "Coordonnées géographiques du pays (latitude, longitude)",
-      "mapped": true,
-      "type": "geo_point",
-      "analyzer": null,
-      "fixed_value": false,
-      "value": null
-    },
-    "geo_shape": {
-      "source_field": "geometry",
-      "description": "Géométrie du pays",
-      "mapped": true,
-      "type": "geo_shape",
-      "analyzer": null,
-      "fixed_value": false,
-      "value": null
-    },
-    "flag": {
-      "source_field": "flag",
-      "description": "URL de l'image du drapeau du pays",
-      "mapped": true,
-      "type": "text",
-      "analyzer": null,
-      "fixed_value": false,
-      "value": null
+    "mapping_name": "test pays",
+    "related_to": "035892a5-2830-4bf4-822d-cc4f5b24439f.csv",
+    "mapping": {
+        "iso2": {
+            "category": "source",
+            "description": "Code ISO alpha-2 du pays",
+            "source_field": "iso2",
+            "mapped": "True",
+            "type": "keyword",
+            "analyzer": "standard"
+        },
+        "iso3": {
+            "category": "source",
+            "description": "Code ISO alpha-3 du pays",
+            "source_field": "iso3",
+            "mapped": "True",
+            "type": "keyword",
+            "analyzer": "standard"
+        },
+        "status": {
+            "category": "fixed_value",
+            "description": "first status",
+            "value": "first status"
+        },
+        "name_en": {
+            "category": "source",
+            "description": "Nom du pays en anglais",
+            "source_field": "name_en",
+            "mapped": "True",
+            "type": "text",
+            "analyzer": "english"
+        },
+        "name_en_completion": {
+            "category": "remplacement",
+            "description": "noms complementaires en anglais",
+            "type_completion": "synonymes",
+            "original_field": "name_en",
+            "column_names": [
+                "name_en",
+                "name_en_completion"
+            ],
+            "keep_original": "True",
+            "use_first_column": "",
+            "filename": "2f38cb5f-2e78-47ad-a162-531b1ee10e51.csv"
+        },
+        "name_en_phonetic": {
+            "category": "phonetic",
+            "description": "Nom du pays en anglais phonétique",
+            "type_completion": "phonetic",
+            "original_field": "name_en",
+            "column_names": [
+                "name_en",
+                "name_en_completion"
+            ],
+            "keep_original": true,
+            "use_first_column": true,
+            "filename": "2f38cb5f-2e78-47ad-a162-531b1ee10e51.csv",
+            "phonetic": {
+                "soundex": false,
+                "metaphone": true,
+                "metaphone3": true
+            }
+        },
+        "geo_point": {
+            "category": "source",
+            "description": "Coordonnées géographiques du pays (latitude, longitude)",
+            "source_field": "latlng",
+            "mapped": "True",
+            "type": "geo_point",
+            "analyzer": "standard"
+        },
+        "geo_shape": {
+            "category": "source",
+            "description": "Géométrie du pays",
+            "source_field": "geometry",
+            "mapped": "True",
+            "type": "geo_shape",
+            "analyzer": "standard"
+        },
+        "flag": {
+            "category": "source",
+            "description": "URL de l'image du drapeau du pays",
+            "source_field": "flag",
+            "mapped": "True",
+            "type": "text",
+            "analyzer": "standard"
+        }
     }
-  }
 }

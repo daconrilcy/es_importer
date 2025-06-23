@@ -1,0 +1,17 @@
+{% if list_fields == None %} {% set list_fields = [] %} {% endif %}
+{% if list_fields|length == 0 %}
+{% set selected_field = "" %}
+{% else %}
+{% set selected_field = list_fields[0] %}
+{% endif %}
+
+<div id="dropdown-mapping-card-menu-root" class="dropdown-card-mapping-menu" data-category="{{catField}}">
+    {% include "preview_files/mapping/undertitle/dropmenu/_base_title.html" %}
+    <div class="dropdown-content" data-category="{{catField}}">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <div class="footer-actions">
+        <button class="btn btn-primary btn-validate" data-category="{{catField}}">Valider</button>
+    </div>
+</div>

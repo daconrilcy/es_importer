@@ -1,0 +1,64 @@
+<div class="field-preview" data-source="{{ field.name }}" data-category="phonetic">
+    <div class="row header">
+        <div class="col-md-2">
+            Original field
+        </div>
+        <div class="col-md-2">
+            Name
+        </div>
+        <div class="col-md-1">
+            Soundex
+        </div>
+        <div class="col-md-1">
+            Metaphone
+        </div>
+        <div class="col-md-1">
+            Metaphone3
+        </div>
+        {% include "preview_files/mapping/rows_modif/_header_filename.html" %}
+        <div class="col-md-2">
+            Actions
+        </div>
+    </div>
+    <div class="row field" data-source="{{ field.name }}" data-category="phonetic">
+        <div class="col-md-2" data-field="original_field" data-source="{{ field.name }}"
+             data-original-value="{{ field.original_field }}">
+            {{ field.original_field }}
+        </div>
+        <div class="col-md-2" data-field="name" data-source="{{ field.name }}">
+            <input type="text" value="{{ field.name }}"
+                   data-original-value="{{ field.name }}"
+                   data-source="{{ field.name }}"
+                   data-field="name">
+        </div>
+        <div class="col-md-1" data-field="soundex" data-source="{{ field.name }}">
+            {%set switch_value = field.is_soundex %}
+            {%set field_name = "Soundex"%}
+            {% include "preview_files/mapping/switch.html" %}
+        </div>
+        <div class="col-md-1" data-field="metaphone" data-source="{{ field.name }}">
+            {%set switch_value = field.is_metaphone %}
+            {%set field_name = "metaphone"%}
+            {% include "preview_files/mapping/switch.html" %}
+        </div>
+        <div class="col-md-1" data-field="metaphone3" data-source="{{ field.name }}">
+            {%set switch_value = field.is_metaphone3 %}
+            {%set field_name = "metaphone3"%}
+            {% include "preview_files/mapping/switch.html" %}
+        </div>
+        <div class="col-md-3" data-field="filename" data-source="{{ field.name }}">
+            {% set field_name = "filename" %}
+            {% set selected_value = field.filename %}
+            {% set list_values = datas.list_completion_files %}
+            {% set add_empty = True %}
+            {% set value_empty = "" %}
+            {% set screen_empty = "New" %}
+            {% include "preview_files/mapping/select_field/select_field.html" %}
+        </div>
+        <div class="col-md-2 actions">
+            {% set modifier = true %}
+            {% set generate = true %}
+            {% include "preview_files/mapping/rows_modif/icones_actions_rows.html"%}
+        </div>
+    </div>
+</div>

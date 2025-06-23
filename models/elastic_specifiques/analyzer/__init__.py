@@ -32,4 +32,4 @@ class BasicAnalyzers(BasicEsModule):
 
 if __name__ == "__main__":
     et = BasicAnalyzers()
-    print(et)
+    print(et.fields_names)

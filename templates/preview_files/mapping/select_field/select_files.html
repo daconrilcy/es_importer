@@ -1,0 +1,9 @@
+<select class="form-select">
+    {% for file_infos in file_infos_list %}
+    {% if selected_value == file_infos.encoded_filepath %}
+    <option value="{{ file_infos.encoded_filepath }}" selected>{{ file_infos.front_end_filename }}</option>
+    {% else %}
+    <option value="{{ file_infos.encoded_filepath }}"> {{ file_infos.front_end_filename }}</option>
+    {% endif %}
+    {% endfor %}
+</select>

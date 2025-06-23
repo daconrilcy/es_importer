@@ -1,5 +1,5 @@
 from pathlib import Path
-from typing import Any, Union, List
+from typing import Any, Union, List, Dict
 
 import pandas as pd
 
@@ -25,5 +25,16 @@ class CsvFileValidator:
             return False
         extension = Path(filename).suffix.lower()
         if extension != ".csv":
+            return False
+        return True
+
+class MappingFileValidator:
+    def is_valid(self, data: Dict[str, Any], filename: str) -> bool:
+        if not isinstance(data, dict):
+            return False
+        if not filename:
+            return False
+        extension = Path(filename).suffix.lower()
+        if extension != ".json":
             return False
         return True

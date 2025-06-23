@@ -24,4 +24,4 @@ class EsTypes(BasicEsModule):
 
 if __name__ == "__main__":
     et = EsTypes()
-    print(et)
+    print(et.fields_names)

@@ -1,0 +1,12 @@
+{% set catField = "fixed_value" %}
+
+{% extends "preview_files/mapping/undertitle/dropmenu/_base_layout.html" %}
+
+{% block content %}
+{% include "preview_files/mapping/undertitle/dropmenu/_fieldname.html" %}
+<div class="form-group">
+    <label for="dp_add_field_fixed_value">Valeur</label>
+    <input class="form-control" type="text" placeholder="Valeur" name="dp_add_field_fixed_value"
+           id="dp_add_field_fixed_value">
+</div>
+{% endblock %}

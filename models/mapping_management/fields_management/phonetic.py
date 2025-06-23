@@ -7,9 +7,10 @@ from models.mapping_management.fields_management.remplacement import Replacement
 class PhoneticField(ReplacementField):
 
     def __init__(self, name: str, data: dict, config: Optional[Config] = None):
-        super().__init__(name, data, config)
-        self._phonetics = Dict[str, bool]
         self._default_phonetic = {"soundex": False, "metaphone": False, "metaphone3": False}
+        super().__init__(name, data, config)
+        data["type_completion"] = "phonetic"
+        self._phonetics = Dict[str, bool]
         self._set(data)
 
     def _set(self, data: dict):
@@ -19,7 +20,9 @@ class PhoneticField(ReplacementField):
         self._phonetics_set(data)
 
     def _phonetics_set(self, data: dict):
-        self._phonetics = data.get("phonetic", self._default_phonetic)
+        self._phonetics = data.get("phonetic", None)
+        if self._phonetics is None:
+            self._phonetics = self._default_phonetic
         for key, value in self._phonetics.items():
             self._phonetics[key] = self._bool_set(value)
 
@@ -38,9 +41,28 @@ class PhoneticField(ReplacementField):
         return self._phonetics
 
     @property
+    def is_soundex(self) -> bool:
+        return self.phonetics.get("soundex", False)
+
+    @property
+    def is_metaphone(self) -> bool:
+        return self.phonetics.get("metaphone", False)
+
+    @property
+    def is_metaphone3(self) -> bool:
+        return self.phonetics.get("metaphone3", False)
+
+    @property
     def dict(self) -> Dict[str, Any]:
         data = super().dict
         data["phonetic"] = self.phonetics
         data["category"] = "phonetic"
 
         return data
+
+if __name__ == '__main__':
+    data_test = {"name": "test", "category": "test", "original_field": "test", "type_completion": "phonetic",
+                 "column_names": ["test"], "filename": "test",
+                 "phonetic": {"soundex": True}}
+    field = PhoneticField("test", data_test)
+    print(field.dict)

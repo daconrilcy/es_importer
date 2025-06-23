@@ -1,0 +1,27 @@
+<div class="row" data-source="{{ field.name }}" data-category="{{ field.category }}">
+    <div class="col-md-2 px-md-2 center nohover" data-source="{{ field.name }}">
+        {{field.category}}
+    </div>
+    <div class="col-md-2 px-md-2 center fieldhover" data-field="name" data-source="{{ field.name }}">
+        {{field.name}}
+    </div>
+    <div class="col-md-2 px-md-2 center fieldhover"
+         data-field="source_field" data-source="{{ field.name }}">
+        {% if field.source_field %}
+        {{field.source_field}}
+        {% elif field.original_field %}
+        {{field.original_field}}
+        {% else %}
+        -
+        {% endif %}
+    </div>
+    <div class="col-md-5 px-md-5 center" data-field="description" data-source="{{ field.name }}">
+        <input class="center" type="text" value="{{ field.description }}"
+               data-original-value="{{ field.description }}"
+               data-field="description"
+               data-source="{{ field.name }}">
+    </div>
+    <div class="col-md-1 px-md-1 nohover" data-source="{{ field.name }}">
+        {% include "preview_files/mapping/rows_modif/icones_actions_rows.html"%}
+    </div>
+</div>

@@ -1,0 +1,8 @@
+{% if field_name is not defined %}
+{% set field_name = 'select_field' %}
+{% endif %}
+{% set list_values = [True, False] %}
+{% if selected_value is not defined %}
+{% set selected_value = False %}
+{% endif %}
+{% include "preview_files/mapping/select_field/select_field.html" %}

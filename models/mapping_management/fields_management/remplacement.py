@@ -37,7 +37,7 @@ class ReplacementField(BaseMappingField):
         """
         if data is None:
             return
-        self._type_completion = self._require(data, "_type_completion")
+        self._type_completion = self._require(data, "type_completion")
         self._original_field = self._require(data, "original_field")
         self._column_names = self._require(data, "column_names")
         self._filename = self._require(data, "filename")

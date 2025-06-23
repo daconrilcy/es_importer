@@ -1,7 +1,6 @@
 import logging
 from typing import Optional, Any
 
-from models.utils_obj import MultiUtils
 from utils import sanitaze_string
 
 logger = logging.getLogger(__name__)
@@ -27,7 +26,7 @@ class EsFieldType:
     @name.setter
     def name(self, value: str) -> None:
         """Définit le nom du champ, après nettoyage."""
-        self._name = self._sanitize_or_none("name", value)
+        self._name = sanitaze_string(value)
 
     @property
     def category(self) -> str:
@@ -37,7 +36,7 @@ class EsFieldType:
     @category.setter
     def category(self, value: str) -> None:
         """Définit la catégorie du champ, après nettoyage."""
-        self._category = self._sanitize_or_none("category", value)
+        self._category = sanitaze_string(value)
 
     @property
     def description(self) -> str:
@@ -74,13 +73,3 @@ class EsFieldType:
 
     def __str__(self) -> str:
         return f"{self.name} - {self.category} - {self.description}"
-
-    @staticmethod
-    def _sanitize_or_none(source: str, value: Optional[str]) -> str:
-        """
-        Nettoie une chaîne ou retourne une chaîne vide si None.
-        """
-        if value is None:
-            logger.info(f"EsFieldType - {source} value is None")
-            return ""
-        return MultiUtils().sanitaze_string(value)

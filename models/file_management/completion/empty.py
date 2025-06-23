@@ -1,15 +1,18 @@
 from typing import Union, Optional, List, Dict
 
 from config import Config
-from models.completion.creator import CsvManualMultiColumnsBuilder
-from models.completion.request import RequestValidator
+from models.file_management.completion.creator import CsvManualMultiColumnsBuilder
+from models.file_management.completion.request import RequestValidator
 import logging
 
 logger = logging.getLogger(__name__)
 
 
-class EmptyColumnAdder:
-
+class MappingCompletionEmptyFileCreator:
+    """
+    Cette classe permet de créer un fichier CSV avec des colonnes vides prêtes à recevoir des données.
+    La première colonne est la colonne source et les autres colonnes sont vides.
+    """
     def __init__(
             self,
             request_dict: Dict,
@@ -59,7 +62,7 @@ if __name__ == "__main__":
 
     filepath = "c:/dev/py/csv_importer/files/datas/5c1f2fe2-1e64-4c5e-83a7-d0dd43439a82.csv"
     encoded_filepath = FilePathCodec.encode(filepath)
-    request_dict_test = {"fileid": None, "chunk": 1, "chunksize": 1000, "filename": "test.csv", "separator": ";",
+    request_dict_test = {"fileid": None, "chunk": 1, "chunksize": 1000, "filename": None, "separator": ";",
                          "encoded_filepath": encoded_filepath, "source_column": "name_en"}
-    empty_column_adder_test = EmptyColumnAdder(request_dict_test)
+    empty_column_adder_test = MappingCompletionEmptyFileCreator(request_dict_test)
     empty_column_adder_test.create()

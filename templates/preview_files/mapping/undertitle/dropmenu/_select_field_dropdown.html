@@ -1,0 +1,12 @@
+<div class="form-group">
+    <label for="dp_add_field_field_selection">Champ source</label>
+    <select class="form-select" id="dp_add_field_field_selection" data-field="source_field" data-category="{{catField}}">
+        {% for field in list_fields %}
+        {% if field != selected_field %}
+        <option value="{{ field }}">{{ field }}</option>
+        {% else %}
+        <option value="{{ field }}" selected>{{ field }}</option>
+        {% endif %}
+        {% endfor %}
+    </select>
+</div>

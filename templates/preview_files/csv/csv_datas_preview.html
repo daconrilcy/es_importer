@@ -1,0 +1,22 @@
+<div class="csv-zone">
+    <div class="csv-container">
+        <button class="scroll-lateral-button left"><i class="glyphicon glyphicon-left"></i></button>
+        <button class="scroll-lateral-button right"><i class="glyphicon glyphicon-right"></i></button>
+        <div class="csv-table-wrapper">
+            {% include "preview_files/csv/header_option_card.html" %}
+            <table class="csv-table" id="csv-table"
+                   data-chunk-index={{datas.chunk_index}} data-num-chunks={{datas.num_chunks}}
+                   data-chunk-size={{datas.chunk_size}}
+                   data-file-id={{datas.id}}
+                   data-filepath={{datas.encoded_filepath}}>
+                {% include "preview_files/csv/csv_table.html" %}
+            </table>
+        </div>
+    </div>
+    <div id="chunkBarFixed" class="pagination-bar">
+        {% set chunk_index = datas.chunk_index %}
+        {% set num_chunks = datas.num_chunks %}
+        {% set chunk_size = datas.chunk_size %}
+        {% include "preview_files/csv/table_pagination.html" %}
+    </div>
+</div>

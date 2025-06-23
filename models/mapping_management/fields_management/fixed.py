@@ -26,6 +26,7 @@ class FixedValueMappingField(BaseMappingField):
         if not self._value:
             logger.error("FixedValueField : Le champ 'value' est None.")
 
+    @property
     def value(self):
         return self._value
 

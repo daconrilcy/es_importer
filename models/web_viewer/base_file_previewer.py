@@ -10,11 +10,14 @@ from models.file_management.filepath_codec import FilePathCodec
 class BaseFilePreviewer(ABC):
     """Classe abstraite de base pour la prévisualisation de fichiers."""
 
-    def __init__(self, list_files: Optional[list[FileInfos]] = None) -> None:
+    def __init__(self, list_files: Optional[list[FileInfos]] = None,
+                 config: Optional[Config] = None
+                 ) -> None:
         self._encoded_filepath: Optional[str] = None
         self._file_infos: Optional[FileInfos] = None
         self._reader: Optional[Any] = None
-        self._list_files: Optional[list[FileInfos]] = list_files
+        self._list_files: Optional[list[FileInfos]] = list_files,
+        self._config = config or Config()
 
     def build_from_file_infos(self, file_infos: FileInfos) -> None:
         """Construit le previewer à partir d'un objet FileInfos."""
@@ -82,7 +85,7 @@ class BaseFilePreviewer(ABC):
         filepath = Path(data["filepath"])
         default_filename = filepath.stem
 
-        data.setdefault("type", Config().file_types.mappings.name)
+        data.setdefault("type", self._config.file_types.mappings.name)
         data.setdefault("filename", default_filename)
         data.setdefault("sep")
         data.setdefault("front_end_filename", default_filename[:-4])

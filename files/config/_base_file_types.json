@@ -58,5 +58,17 @@
     "base_layout": "bulks.html",
     "html_preview_layout": "preview_bulks.html",
     "method_preview": "modif_json"
+  },
+  {
+    "name": "completions",
+    "accepted_extensions": [
+      "csv"
+    ],
+    "folder_path": "files\\completions",
+    "url": "uploads/completions",
+    "description": "fichier de données personnelles et complémentaires",
+    "base_layout": "exporters.html",
+    "html_preview_layout": "preview_exporters.html",
+    "method_preview": "exporters_json"
   }
 ]

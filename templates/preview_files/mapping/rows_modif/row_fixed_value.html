@@ -1,0 +1,31 @@
+<div class="field-preview" data-source="{{ field.name }}" data-category="fixed_value">
+    <div class="row header">
+        <div class="col-md-4">
+            Name
+        </div>
+        <div class="col-md-6">
+            Value
+        </div>
+        <div class="col-md-2">
+            Actions
+        </div>
+    </div>
+    <div class="row field" data-source="{{ field.name }}" data-field="name" data-category="fixed_value">
+        <div class="col-md-4 center" data-field="name" data-source="{{ field.name }}">
+            <input class="center" type="text" value="{{ field.name }}"
+                   data-original-value="{{ field.name }}"
+                   data-field="name"
+                   data-source="{{ field.name }}">
+        </div>
+        <div class="col-md-4 center" data-field="value" data-source="{{ field.name }}">
+            <input class="center" type="text" value="{{ field.value }}"
+                   data-original-value="{{ field.value }}"
+                   data-field="value"
+                   data-source="{{ field.name }}">
+        </div>
+        <div class="col-md-2 actions">
+            {% set modifier = true %}
+            {% include "preview_files/mapping/rows_modif/icones_actions_rows.html"%}
+        </div>
+    </div>
+</div>

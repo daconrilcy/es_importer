@@ -3,6 +3,9 @@ from typing import List
 from config import Config
 from elastic_manager import ElasticSearchTools
 from models.file_management.file_infos import FileInfos
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class FileInfosDocuments:
@@ -101,3 +104,40 @@ class FileInfosDocuments:
         :return:
         """
         return self.import_file_infos([file_infos])
+
+    def delete(self, file_infos: FileInfos) -> bool:
+        """
+        Supprime un FileInfos
+        :param file_infos:
+        :return:
+        """
+        if not file_infos:
+            logger.error("FileInfosDocuments : Tentative de suppression d'un FileInfos vide")
+            return False
+        if not file_infos.id:
+            logger.info("FileInfosDocuments : Le FileInfos n'a pas d'id, tentative de suppression par filepath")
+            if not file_infos.filepath:
+                logger.error("FileInfosDocuments : Le FileInfos n'a pas de chemin de fichier, suppression impossible")
+                return False
+            file_infos = self.get_by_filename(file_infos.filename)
+            if not file_infos:
+                logger.error("FileInfosDocuments : le document n'a pas pu être trouvé, suppression impossible")
+                return False
+
+        return self.es_tools.delete_doc(self.index_name, file_infos.id)
+
+    def get_by_filename(self, filename: str) -> FileInfos | None:
+        """
+        Récupère un document de l'index de fichiers au format FileInfos
+        :param filename:
+        :return:
+        """
+        file_docs = self.es_tools.search_by_query(self.index_name, {"query": {"match": {"filename": filename}}})
+        if not file_docs or len(file_docs) == 0:
+            logger.error("FileInfosDocuments : le document n'a pas pu'être trouvé, suppression impossible")
+            return None
+        file_doc = file_docs[0]
+        print(file_doc)
+        if not file_doc:
+            return None
+        return FileInfos(doc=file_doc)

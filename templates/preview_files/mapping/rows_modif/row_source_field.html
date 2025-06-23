@@ -1,0 +1,58 @@
+<div class="field-preview" data-source="{{ field.name }}" data-category="source">
+    <div class="row header">
+        <div class="col-md-2">
+            Source field
+        </div>
+        <div class="col-md-2">
+            Name
+        </div>
+        <div class="col-md-2">
+            Type
+        </div>
+        <div class="col-md-2">
+            Mapped
+        </div>
+        <div class="col-md-2">
+            Analyzer
+        </div>
+        <div class="col-md-2">
+            Actions
+        </div>
+    </div>
+    <div class="row field" data-source="{{ field.name }}" data-category="source">
+        <div class="col-md-2" data-field="original_field" data-source="{{ field.name }}"
+             data-original-value="{{ field.source_field }}">
+            {{ field.source_field }}
+        </div>
+        <div class="col-md-2" data-field="name" data-source="{{ field.name }}">
+            <input type="text" value="{{ field.name }}" data-original-value="{{ field.name }}"
+                   data-field="name" data-source="{{ field.name }}">
+        </div>
+        <div class="col-md-2" data-field="type" data-source="{{ field.name }}">
+            {% set field_name = "type" %}
+            {% set selected_value = field.type %}
+            {% set list_values = es_types %}
+            {% include "preview_files/mapping/select_field/select_field.html" %}
+        </div>
+        <div class="col-md-2" data-field="mapped" data-source="{{ field.name }}">
+            {% set field_name = "mapped"%}
+            {% set selected_value = field.mapped %}
+            {% include "preview_files/mapping/select_field/select_field_bool.html" %}
+
+        </div>
+        <div class="col-md-2" data-field="analyzer" data-source="{{ field.name }}">
+            {% set field_name = "analyzer"%}
+            {% set selected_value = field.analyzer %}
+            {% if selected_value == None %}
+            {% set selected_value = "standard" %}
+            {% endif %}
+            {% set list_values = es_analysers %}
+            {% include "preview_files/mapping/select_field/select_field.html" %}
+        </div>
+        <div class="col-md-2 actions">
+            {% set modifier = true %}
+            {% include "preview_files/mapping/rows_modif/icones_actions_rows.html"%}
+        </div>
+    </div>
+
+</div>

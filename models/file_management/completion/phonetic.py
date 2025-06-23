@@ -2,24 +2,24 @@ import logging
 from typing import Optional
 
 from config import Config
-from models.completion.creator import CsvManualMultiColumnsBuilder
 from models.file_management.file_utls import FileUtils
 from models.file_management.filepath_codec import FilePathCodec
 from models.file_management.readers.csv_file_reader import CsvFileReader
 from models.phonetc_basics.chunk_encoder import PhoneticChunkEncoder
 from models.phonetc_basics.phonetic_dict_validator import PhoneticDictValidator
+from models.file_management.completion.creator import CsvManualMultiColumnsBuilder
 
 from models.phonetc_basics.request_validator import PhoneticRequestValidator
 
 logger = logging.getLogger(__name__)
 
 
-class PhoneticColumnAdder:
+class PhoneticFileCreator:
     """
     Traite une requête de transformation phonétique sur un fichier CSV.
     """
 
-    def __init__(self, request_dataset: dict, config: Optional[Config] = None):
+    def __init__(self, request_dataset: dict, config: Optional[Config] = None) -> bool | str:
         self._config = config or Config()
         self._request = PhoneticRequestValidator(request_dataset)
 
@@ -60,7 +60,7 @@ class PhoneticColumnAdder:
             logger.error(f"PhoneticInserter - Erreur durant le traitement d'injection des données : {e}")
             return False
 
-        return True
+        return filename
 
     def _build_empty_phonetic_csv(self, csv_reader: CsvFileReader, encoder: PhoneticChunkEncoder,
                                   filename: str, original_filepath: str):
@@ -91,15 +91,16 @@ if __name__ == "__main__":
     filepath = "C:/dev/py/csv_importer/files/datas/5c1f2fe2-1e64-4c5e-83a7-d0dd43439a82.csv"
     encoded_filepath = FilePathCodec().encode(filepath)
     sample_request = {
-        'filepath': encoded_filepath,
+        'encoded_filepath': encoded_filepath,
         'column': 'name_en',
         'phonetic': {
             'soundex': False,
             'metaphone': True,
             'metaphone3': True
         },
-        'sep': None
+        'sep': None,
+        'filename': "test.csv"
     }
 
-    processor = PhoneticColumnAdder(sample_request)
+    processor = PhoneticFileCreator(sample_request)
     processor.create()

@@ -95,9 +95,10 @@ class PhonexCsvModifier:
 
 
 if __name__ == "__main__":
-    filepath = "C:/dev/py/csv_importer/files/datas/5c1f2fe2-1e64-4c5e-83a7-d0dd43439a82.csv"
-    separator = ";"
-    source_column = "name_fr"
-    phonex_dict = {"soundex": True, "metaphone": True, "metaphone3": True}
-    chunk_modifier = PhonexCsvModifier(filepath, separator, source_column, phonex_dict, same_file=False)
+    filepath_test = "C:/dev/py/csv_importer/files/datas/5c1f2fe2-1e64-4c5e-83a7-d0dd43439a82.csv"
+    separator_test = ";"
+    source_column_test = "name_fr"
+    phonex_dict_test = {"soundex": True, "metaphone": True, "metaphone3": True}
+    chunk_modifier = PhonexCsvModifier(filepath_test, separator_test, source_column_test, phonex_dict_test,
+                                       same_file=False)
     chunk_modifier.process()

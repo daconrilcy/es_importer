@@ -9,7 +9,15 @@ class PhoneticRequestValidator:
     Valide et extrait les paramètres nécessaires d'une requête phonétique.
     """
 
-    VALID_SEPARATORS = {",", ";", "|", "\t"}
+    _VALID_SEPARATORS = [",", ", ", ";", "; ", "\t", "|"]
+
+    _VALID_FILEPATH_KEYS = [
+        "original_filepath", "originalfilepath", "filepath",
+        "file_path", "path", "encoded_filepath",
+        "encodedfilepath", "encoded_file_path"
+    ]
+
+    _VALID_COLUMN_KEYS = ["column", "colonne", "col", "source_column", "original_field", "field"]
 
     def __init__(self, phonetic_request: dict):
         self._filepath: Optional[str] = None
@@ -23,19 +31,22 @@ class PhoneticRequestValidator:
         """
         Valide la requête et initialise les attributs si valide.
         """
-        required_keys = ['filepath', 'column', 'phonetic', 'sep']
 
         if not phonetic_request:
             logger.error("PhoneticInserter - la requête est vide")
             return False
 
-        missing_keys = [key for key in required_keys if key not in phonetic_request]
-        if missing_keys:
-            logger.error(f"PhoneticInserter - Champs requis manquants : {', '.join(missing_keys)}")
-            return False
+        filepath = None
+        for key in self._VALID_FILEPATH_KEYS:
+            if key in phonetic_request:
+                filepath = phonetic_request[key]
+                break
 
-        filepath = phonetic_request.get("filepath")
-        column = phonetic_request.get("column", "").strip()
+        column = None
+        for key in self._VALID_COLUMN_KEYS:
+            if key in phonetic_request:
+                column = phonetic_request[key].strip()
+                break
         sep = phonetic_request.get("sep")
         phonetic = phonetic_request.get("phonetic")
 
@@ -48,7 +59,7 @@ class PhoneticRequestValidator:
 
         self._filepath = filepath
         self._column = column
-        self._sep = sep if sep in self.VALID_SEPARATORS else None
+        self._sep = sep if sep in self._VALID_SEPARATORS else None
         self._phonetic = phonetic
         return True
 

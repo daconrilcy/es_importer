@@ -44,3 +44,18 @@ class FileTypeExtensionChecker(ExtensionChecker):
         :return: True si autorisée, False sinon.
         """
         return super().is_allowed(extension, file_type.accepted_extensions)
+
+class MappingExtensionChecker(ExtensionChecker):
+    """
+    Vérifie si une extension est autorisée selon un type de fichier.
+    """
+
+    def is_allowed(self, extension: str, file_type: FileType) -> bool:
+        """
+        Vérifie si l'extension est acceptée pour un type de fichier donné.
+
+        :param extension: L'extension à vérifier.
+        :param file_type: L'objet FileType contenant les extensions autorisées.
+        :return: True si autorisée, False sinon.
+        """
+        return super().is_allowed(extension, file_type.accepted_extensions)

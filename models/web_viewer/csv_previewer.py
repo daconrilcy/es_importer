@@ -12,8 +12,11 @@ class FileCsvPreviewer(BaseFilePreviewer):
     Prévisualiseur pour les fichiers CSV, avec gestion de la lecture par chunk.
     """
 
-    def __init__(self, chunk_size: Optional[int] = None, list_files: Optional[List[FileInfos]] = None):
-        super().__init__(list_files)
+    def __init__(self, chunk_size: Optional[int] = None,
+                 list_files: Optional[List[FileInfos]] = None,
+                 config: Optional[Config] = None
+                 ):
+        super().__init__(list_files, config=config)
         self._chunk_size = chunk_size or Config().preview_row_chunk
         self._chunk_index = 0
         self._cached_chunk_df: Optional[DataFrame] = None

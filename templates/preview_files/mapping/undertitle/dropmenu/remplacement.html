@@ -1,0 +1,13 @@
+{% set catField = "remplacement" %}
+
+{% extends "preview_files/mapping/undertitle/dropmenu/_base_layout.html" %}
+
+{% block content %}
+{% include "preview_files/mapping/undertitle/dropmenu/_fieldname.html" %}
+{% include "preview_files/mapping/undertitle/dropmenu/_select_field_dropdown.html" %}
+
+<div class="form-group">
+    <label for="type_completion_add_field">Type</label>
+    <input class="form-control" type="text" placeholder="Synonyme" name="type_completion_add_field" id="type_completion_add_field">
+</div>
+{% endblock %}

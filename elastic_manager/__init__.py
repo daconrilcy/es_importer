@@ -1,3 +1,4 @@
+from fileinput import filename
 from typing import Optional
 
 from config import Config
@@ -27,6 +28,10 @@ class ElasticManager:
 
 
 if __name__ == "__main__":
+    filename_test = "curiexplore-pays.csv"
     em_test = ElasticManager(Config())
-    front_end_filename_test = em_test.files.get_one_front_name(type_file="datas", filename="curiexplore-pays.csv")
-    print(front_end_filename_test)
+    # front_end_filename_test = em_test.files.get_one_front_name(type_file="datas", filename="curiexplore-pays.csv")
+    # print(front_end_filename_test)
+    file_infos_test = em_test.files_obj.get_by_filename(filename_test)
+    print(file_infos_test)
+

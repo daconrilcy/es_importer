@@ -1,9 +1,0 @@
-<select class="form-select">
-    {% for value in [True, False] %}
-    {% if selected_value == value %}
-    <option value="{{ es_bool }}" selected>{{ value }}</option>
-    {% else %}
-    <option value="{{ es_bool }}"> {{ value }}</option>
-    {% endif %}
-    {% endfor %}
-</select>
