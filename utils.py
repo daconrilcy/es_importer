@@ -40,7 +40,7 @@ def is_file_in_folder(filename, folder_path):
 
 
 def safe_load_csv(file_path: str, sep: str = ',', header: bool = True) \
-        -> pd.DataFrame or None:
+        -> pd.DataFrame | None:
     """
     Load a CSV file safely.
     :param file_path: Path to the CSV file.
@@ -308,7 +308,7 @@ def infer_elasticsearch_mapping_from_csv(file_path, sep='\\t'):
     return pre_mapping
 
 
-def preview_csv(filepath: str, sep: str = ',') -> str or bool:
+def preview_csv(filepath: str, sep: str = ',') -> str | bool:
     """
     Preview the csv file and return the first and last three rows.
     """
