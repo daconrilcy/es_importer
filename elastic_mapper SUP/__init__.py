@@ -228,7 +228,7 @@ class EsMapper:
             return datas
         return datas[self._list_sources_fields_properties]
 
-    def set_mapped_datas_temp_from_file(self, filename: str, sep: str = None) -> str or None:
+    def set_mapped_datas_temp_from_file(self, filename: str, sep: str = None) -> str | None:
         """
         Get the mapped datas from a file.
         Filtered datas are saved in a Temp file.
@@ -301,7 +301,7 @@ class EsMapper:
                 deleted_files.append(file)
             print(f"EsMapper - {len(deleted_files)} Fichiers temporaires supprimés : {deleted_files}")
 
-    def set_bulk_doc(self) -> str or None:
+    def set_bulk_doc(self) -> str | None:
         """
         Set the bulks doc.
         :return: str : filepath of bulkdoc file.
